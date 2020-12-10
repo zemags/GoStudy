@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	// var card string = "Ace of Spades"
-	// card := "Ace of Spades" // : use when first initialize
+	// card := "Ace of Spades" // : use when first initialize\create
 	// card = "Five of Diamonds" // when second time reinitilize dont need :
 
 	card := newCard()
