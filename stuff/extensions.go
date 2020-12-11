@@ -9,5 +9,12 @@ func printSlice() {
 
 	for _, number := range numbersSlice {
 		fmt.Println("Hello ", number)
+		break
 	}
+}
+
+type birthDate []int
+
+func (bD birthDate) formatPrint() {
+	fmt.Println(bD[0]) // will print 12345
 }
