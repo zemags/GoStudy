@@ -31,3 +31,8 @@ func (d deck) print() { //func with name print now is recivier
 		fmt.Println(idx, card)
 	}
 }
+
+// (deck, deck) means return two values of type 'deck'
+func deal(d deck, handSize int) (deck, deck) { // handSize - number of arguments, its argument inside of func call
+	return d[:handSize], d[handSize:]
+}
