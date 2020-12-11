@@ -6,6 +6,22 @@ import "fmt"
 // which is a slice of string
 type deck []string // new type deck extends existing type string, its like class declaration
 
+func newDeck() deck { // return a value of type 'deck'
+	cards := deck{}
+
+	cardSuits := []string{"Spades", "Diamonds", "Hearts", "Clubs"}
+	cardValues := []string{"Ace", "Two", "Three", "Four"}
+
+	for _, suit := range cardSuits {
+		for _, value := range cardValues {
+			newCard := value + " of " + suit
+			cards = append(cards, newCard)
+		}
+	}
+
+	return cards
+}
+
 // Create new function thats belongs to typ deck
 // any var of type 'deck' now gets access to the 'print' method
 // d is cards from main.go, d it's like self in python
