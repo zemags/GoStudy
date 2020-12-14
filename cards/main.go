@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func main() {
 	// cards := []string{newCard(), "New string"} // [] slice with type string
 
@@ -17,5 +15,6 @@ func main() {
 	// fmt.Println([]byte(greeting))  // byteslice
 
 	cards := newDeck()
-	fmt.Println(cards.toString())
+	// fmt.Println(cards.toString())
+	cards.saveToFile("my_cards")
 }

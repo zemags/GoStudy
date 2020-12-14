@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"strings"
 ) // import multiply imports
 
@@ -42,4 +43,8 @@ func deal(d deck, handSize int) (deck, deck) { // handSize - number of arguments
 
 func (d deck) toString() string { // (d deck) means recivier func
 	return strings.Join([]string(d), ",") // []string(d) return a slice of strings
+}
+
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666) // writing to file, 0666-permissions anyone can read\write
 }
