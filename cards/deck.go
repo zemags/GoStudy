@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 ) // import multiply imports
 
@@ -47,4 +48,15 @@ func (d deck) toString() string { // (d deck) means recivier func
 
 func (d deck) saveToFile(filename string) error {
 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666) // writing to file, 0666-permissions anyone can read\write
+}
+
+func newDeckFromFile(filename string) deck {
+	bs, err := ioutil.ReadFile(filename) // bs - byteslice, err - error object\value of type error can return error or null\nil
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1) // 1 or any number means error, 0 - means success
+	}
+
+	s := strings.Split(string(bs), ",") // s - slice of strings name is convention
+	return deck(s)
 }
