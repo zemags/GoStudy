@@ -1,14 +1,20 @@
 package main
 
-import "fmt"
+func main() {
+	checkNumbers()
+}
 
-func main()  {
+func checkNumbers() []string {
 	sliceOfInts := []int{0,1,2,3,4,5,6,7,8,9,10}
+	var results []string
+	currentResult := "even"
 	for _, number := range sliceOfInts {
 		if number % 2 == 0 {
-			fmt.Println("even")
+			currentResult = "even"		
 		} else {
-			fmt.Println("odd")
+			currentResult = "odd"	
 		}
+		results = append(results, currentResult)
 	}
+	return results
 }
