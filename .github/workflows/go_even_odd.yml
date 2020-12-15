@@ -1,0 +1,32 @@
+name: go_even_odd_ci
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  go_testing:
+    name: test_process
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.15.5
+      uses: actions/setup-go@v2
+      with:
+        go-version: ^1.15.5
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Get dependencies
+      run: |
+        go get -v -t -d ./...
+        if [ -f Gopkg.toml ]; then
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+            dep ensure
+        fi
+    
+    - name: Test
+      run: go test -v ./even_odd
