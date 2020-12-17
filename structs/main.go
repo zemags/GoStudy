@@ -39,7 +39,7 @@ func main()  {
 	// 	},
 	// }
 
-	// jimPointer := &jim  //Give memory(RAM) address of the value jim, reference to memery address
+	// jimPointer := &jim  //Give memory(RAM) address of the value jim, reference to memery address its like 0001, & - turning a value into a pointer
 	// jimPointer.updateName("Jimmy")
 
 
@@ -48,10 +48,10 @@ func main()  {
 
 }
 
-func (pointerToPerson *person) updateName(newFirstName string) { // *person means working with a pointer to a person
+func (pointerToPerson *person) updateName(newFirstName string) { // *person means working with a pointer to a person, specifies the type of the receiver
 	(*pointerToPerson).firstName = newFirstName  // (*pointerToPerson) means take this memory address and give a value of this address, our case its person{firstName: "Jim", ..}, manipulate the value the pointer is referencing
 }
 
-func (p person) print() { // recivier
+func (p person) print() { // receiver
 	fmt.Printf("%+v", p)
 }
