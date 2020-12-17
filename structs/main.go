@@ -39,9 +39,11 @@ func main()  {
 	// 	},
 	// }
 
-	jimPointer := &jim  //Give memory(RAM) address of the value jim, reference to memery address
+	// jimPointer := &jim  //Give memory(RAM) address of the value jim, reference to memery address
+	// jimPointer.updateName("Jimmy")
 
-	jimPointer.updateName("Jimmy")
+
+	jim.updateName("Jimmy")  // type of person
 	jim.print()
 
 }
