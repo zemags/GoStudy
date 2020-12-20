@@ -21,10 +21,17 @@ func main() {
 	fmt.Println(colors)
 
 	printMap(colors)
+
+	addColor(colors)
 }
 
 func printMap(c map[string]string) {
 	for key, value := range c {
 		fmt.Println(key + " " + value)
 	}
+}
+
+func addColor(c map[string]string) map[string]string {
+	c["yellow"] = "undefined"
+	return c
 }
