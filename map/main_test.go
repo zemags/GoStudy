@@ -8,7 +8,7 @@ func TestMap(t *testing.T) {
 
 	checkColors = addColor(checkColors)
 	_, isKeyPresent := checkColors["yellow"]
-	if !isKeyPresent {
+	if !isKeyPresent { // ! means 'not'
 		t.Errorf("There is no yellow in map")
 	}
 }
