@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+
+
 func printSlice() {
 	numberFour := 4
 	var numberFive int = 5
@@ -11,6 +13,11 @@ func printSlice() {
 		fmt.Println("Hello ", number)
 		break
 	}
+}
+
+type job struct {
+	jobName string
+	salary float32
 }
 
 type birthDate []int
