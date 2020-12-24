@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() { // main routine, without channels will not be wating other child
@@ -36,7 +37,12 @@ func main() { // main routine, without channels will not be wating other child
 	// }
 
 	for l := range c { // wait for a channel to return a value and after assign that value to 'l'
-		go checkLink(l, c)
+		// time.Sleep(3 * time.Second) // sleep for 3 second, and its not appropriate to put sleep in main func
+		// go checkLink(l, c)
+		go func(link string) { // 'function literal' like lambda in python
+			time.Sleep(3 * time.Second)
+			checkLink(link, c)
+		}(l) // pass 'l' to avoid that l doesnt initiate
 	}
 }
 
