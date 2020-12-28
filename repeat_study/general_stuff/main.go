@@ -33,3 +33,41 @@ func appendToList(lst []int, value int) []int {
 	lst = append(lst, value+1)
 	return lst
 }
+
+const oneGrad int = 2 // constant value can't be changed
+func gradToHours() {
+	var d int
+	fmt.Scan(&d) // read from input
+	h := d / 30
+	m := oneGrad * (d % 30)
+	fmt.Printf("It is %[1]d hours %[2]d minutes.", h, m)
+}
+
+func studyConst() {
+	const (
+		c0 = iota // c0 == 0
+		c1 = iota // c1 == 1
+		c2 = iota // c2 == 2
+	)
+	fmt.Println(c0, c1, c2) // вывод: 0 1 2
+
+	const (
+		Sunday = iota // iota its a Go value starts with 0 int
+		Monday
+		Tuesday
+		Wednesday
+		Thursday
+		Friday
+		Saturday
+		_ // пропускаем 7
+		Add
+	)
+
+	fmt.Println(Sunday)   // вывод: 0
+	fmt.Println(Saturday) // вывод: 6
+	fmt.Println(Add)      // вывод: 8
+
+	// переменные ни в одном блоке const, поэтому индекс не увеличился
+	const x = iota // x == 0
+	const y = iota // y == 0
+}
