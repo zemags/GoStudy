@@ -101,3 +101,82 @@ func switchStatement(i int) string {
 		return "Default value"
 	}
 }
+
+func fallthroughStatement(i int) string {
+	switch i {
+	case 999:
+		fallthrough // the next case will be execute
+		//anyway, no matter false or true statement in next case
+	case 1:
+		return "pass fallthrough"
+	default:
+		return "Default value"
+	}
+}
+
+func switchWithNoCondition(i int) int {
+	switch { // no condition
+	case i == 1:
+		return i + 1
+	default:
+		return i
+	}
+}
+
+func allNumbersDiff(i int) string {
+	a := i / 100     // get first item
+	b := i / 10 % 10 // get second item
+	c := i % 10      // get third item
+	switch {
+	case a != b && a != c && b != c:
+		return "YES"
+	default:
+		return "NO"
+	}
+}
+
+// func getFirstDigit(i int) int {
+// 	a := i / 10000 // get first item
+// 	b : = i / 1000
+// 	switch {
+// 	case a == 1:
+// 		return 1
+// 	case b / 1000 == :
+// 		return i / 1000
+// 	case int(len(i)) == 3:
+// 		return i / 100
+// 	case int(len(i)) == 2:
+// 		return i / 10
+// 	default:
+// 		return i
+// 	}
+// }
+
+func happyTicket(i int) string {
+	first3 := i / 1000
+	second3 := i % 1000
+	switch {
+	case helper(first3) == helper(second3):
+		return "YES"
+	default:
+		return "NO"
+	}
+}
+
+func helper(i int) int {
+	a := i / 100
+	b := i / 10 % 10
+	c := i % 10
+	return a + b + c
+}
+
+func leapYearCheck(i int) string {
+	switch {
+	case i%400 == 0:
+		return "YES"
+	case i%4 == 0 && i%100 != 0:
+		return "YES"
+	default:
+		return "NO"
+	}
+}
