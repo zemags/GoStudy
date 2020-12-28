@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
 	var a, b, c int // default value 0 for int
@@ -52,7 +55,7 @@ func studyConst() {
 	fmt.Println(c0, c1, c2) // вывод: 0 1 2
 
 	const (
-		Sunday = iota // iota its a Go value starts with 0 int
+		Sunday = iota // iota its a Go value constant starts with 0 int
 		Monday
 		Tuesday
 		Wednesday
@@ -70,4 +73,20 @@ func studyConst() {
 	// переменные ни в одном блоке const, поэтому индекс не увеличился
 	const x = iota // x == 0
 	const y = iota // y == 0
+}
+
+func shortIfStatement(x, n, lim float64) float64 {
+	if v := math.Pow(x, n); v < lim {
+		return v
+	}
+	return lim
+}
+
+func elseIfStatement(a, b int) bool {
+	if a < b {
+		return true
+	} else if a > b { // like pythons elif
+		return false
+	}
+	return true
 }
