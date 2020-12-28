@@ -90,3 +90,14 @@ func elseIfStatement(a, b int) bool {
 	}
 	return true
 }
+
+func switchStatement(i int) string {
+	switch i {
+	case 0:
+		return "Zero"
+	case 999:
+		return "999"
+	default:
+		return "Default value"
+	}
+}
