@@ -6,30 +6,31 @@ import (
 )
 
 func main() {
-	var a, b, c int // default value 0 for int
-	var x = 10
-	var y int = 50
+	// var a, b, c int // default value 0 for int
+	// var x = 10
+	// var y int = 50
 
-	var (
-		variable int    = 99
-		sentence string = "Hello"
-	)
+	// var (
+	// 	variable int    = 99
+	// 	sentence string = "Hello"
+	// )
 
-	var lst1, lst2 []int
+	// var lst1, lst2 []int
 
-	y = y / x
-	a = 5 + y
-	a++ // a = a + 1
+	// y = y / x
+	// a = 5 + y
+	// a++ // a = a + 1
 
-	lst1 = appendToList(lst1, a)
-	lst1 = appendToList(lst1, b)
-	lst1 = appendToList(lst1, c)
+	// lst1 = appendToList(lst1, a)
+	// lst1 = appendToList(lst1, b)
+	// lst1 = appendToList(lst1, c)
 
-	lst2 = appendToList(lst2, 0)
+	// lst2 = appendToList(lst2, 0)
 
-	fmt.Println(lst1, lst2)
+	// fmt.Println(lst1, lst2)
 
-	fmt.Println(variable, sentence)
+	// fmt.Println(variable, sentence)
+	fmt.Println(countElements([]int{1, 3, 3, 1, 0}))
 }
 
 func appendToList(lst []int, value int) []int {
@@ -177,4 +178,70 @@ func leapYearCheck(i int) string {
 	default:
 		return "NO"
 	}
+}
+
+func sumBetweenTwoNumber(a, b int) int {
+	// var a, b int
+	var sum int
+	// fmt.Scan(&a, &b)
+	for i := a; i <= b; i++ {
+		sum += i
+	}
+	return sum
+}
+
+func sumOfTwoInRange(s []int) int {
+	var sum int
+
+	for _, i := range s {
+		if (i >= 10 && i <= 99) && i%8 == 0 {
+			sum += i
+		}
+	}
+	return sum
+}
+
+func countElements(s []int) int {
+	var maxValue = 0
+	var count = 1
+	for _, current := range s {
+		if current > maxValue {
+			maxValue = current
+		} else if current == maxValue {
+			count++
+		} else if current == 0 {
+			break
+		}
+	}
+	return count
+}
+
+func twoNumbersDigitCompare(x, y int) string {
+	s := ""
+	initial := 10000
+	z := y
+
+	for i := 0; i < 5; i++ { // first number
+		currentCompareFirst := x / initial
+		if currentCompareFirst > 0 { // starts with 5 digits number and so on
+			x = x - currentCompareFirst*initial
+
+			childInitial := 10000
+			for j := 0; j < 5; j++ { // second number
+				currentCompareSecond := y / childInitial
+				if currentCompareSecond > 0 {
+					y = y - currentCompareSecond*childInitial
+
+					if currentCompareSecond == currentCompareFirst {
+						s = s + fmt.Sprintf("%d ", currentCompareFirst)
+					}
+				}
+				childInitial = childInitial / 10
+			}
+
+		}
+		initial = initial / 10
+		y = z
+	}
+	return s[:len(s)-1]
 }
