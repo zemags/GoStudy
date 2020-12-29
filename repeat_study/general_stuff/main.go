@@ -135,22 +135,20 @@ func allNumbersDiff(i int) string {
 	}
 }
 
-// func getFirstDigit(i int) int {
-// 	a := i / 10000 // get first item
-// 	b : = i / 1000
-// 	switch {
-// 	case a == 1:
-// 		return 1
-// 	case b / 1000 == :
-// 		return i / 1000
-// 	case int(len(i)) == 3:
-// 		return i / 100
-// 	case int(len(i)) == 2:
-// 		return i / 10
-// 	default:
-// 		return i
-// 	}
-// }
+func getFirstDigit(i int) int {
+	switch {
+	case i == 10000:
+		return 1
+	case i/1000 > 0:
+		return i / 1000
+	case i/1000 == 0 && i/100 > 0:
+		return i / 100
+	case i/1000 == 0 && i/100 == 0 && i/10 > 0:
+		return i / 10
+	default:
+		return i
+	}
+}
 
 func happyTicket(i int) string {
 	first3 := i / 1000

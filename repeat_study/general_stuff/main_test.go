@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -107,5 +108,23 @@ func TestLeapYearCheck(t *testing.T) {
 		t.Errorf("Expect YES got NO")
 	} else if result = leapYearCheck(2001); result != "NO" {
 		t.Errorf("Expect NO got YES")
+	}
+}
+
+// Multiple Test Cases per Function
+func TestGetFirstDigit(t *testing.T) {
+	t.Run("10000", testFirstDigit(10000, 1))
+	t.Run("2345", testFirstDigit(2345, 2))
+	t.Run("345", testFirstDigit(345, 3))
+	t.Run("45", testFirstDigit(45, 4))
+	t.Run("5", testFirstDigit(5, 5))
+}
+
+func testFirstDigit(number int, expected int) func(*testing.T) {
+	return func(t *testing.T) {
+		result := getFirstDigit(number)
+		if result != expected {
+			t.Errorf(fmt.Sprintf("Expected the %d but instead got %d", expected, result))
+		}
 	}
 }
