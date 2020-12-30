@@ -245,3 +245,14 @@ func twoNumbersDigitCompare(x, y int) string {
 	}
 	return s[:len(s)-1]
 }
+
+// FORMMATING
+func cutFloat(x float64) string {
+	if x <= 0 {
+		return fmt.Sprintf("%2.2f", x)
+	} else if x > 10000 {
+		return fmt.Sprintf("%e", x)
+	} else {
+		return fmt.Sprintf("%.4f", x*x)
+	}
+}

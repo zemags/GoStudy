@@ -165,3 +165,18 @@ func testCountElements(s []int, expected int) func(*testing.T) {
 		}
 	}
 }
+
+func TestCutFloat(t *testing.T) {
+	t.Run("-000012.2123", testCutFloat(-000012.2123, "-12.21"))
+	t.Run("1000001", testCutFloat(1000001, "1.000001e+06"))
+	t.Run("12.12345678", testCutFloat(12.12345678, "146.9782"))
+}
+
+func testCutFloat(x float64, expected string) func(*testing.T) {
+	return func(t *testing.T) {
+		result := cutFloat(x)
+		if result != expected {
+			t.Errorf("expected %v instead got %v", expected, result)
+		}
+	}
+}
