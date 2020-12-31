@@ -180,3 +180,14 @@ func testCutFloat(x float64, expected string) func(*testing.T) {
 		}
 	}
 }
+
+func TestWorkWithArray(t *testing.T) {
+	var expectedArray [10]uint8 = [10]uint8{99, 137, 151, 187, 117, 71, 20, 187, 93, 67}
+	var workArray [10]uint8 = [10]uint8{99, 151, 137, 71, 117, 187, 20, 93, 187, 67}
+	var idxArray [6]uint8 = [6]uint8{1, 2, 3, 5, 7, 8}
+	result := workWithArray(workArray, idxArray)
+
+	if result != expectedArray {
+		t.Errorf("expected %v instead got %v", expectedArray, result)
+	}
+}

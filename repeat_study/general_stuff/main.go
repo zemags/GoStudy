@@ -256,3 +256,14 @@ func cutFloat(x float64) string {
 		return fmt.Sprintf("%.4f", x*x)
 	}
 }
+
+//ARRAYS
+func workWithArray(workArray [10]uint8, idxArray [6]uint8) [10]uint8 {
+	for _, idx := range []int{0, 2, 4} {
+		workArray[idxArray[idx]], workArray[idxArray[idx+1]] = workArray[idxArray[idx+1]], workArray[idxArray[idx]]
+	}
+	for _, value := range workArray {
+		fmt.Printf("%v ", value)
+	}
+	return workArray
+}
