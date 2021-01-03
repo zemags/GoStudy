@@ -267,3 +267,7 @@ func workWithArray(workArray [10]uint8, idxArray [6]uint8) [10]uint8 {
 	// }
 	return workArray
 }
+
+func get4Element(sBig [5]int) int {
+	return sBig[3]
+}

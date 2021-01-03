@@ -33,19 +33,17 @@ func TestShortIfStatement(t *testing.T) {
 }
 
 func TestElseIfStatement(t *testing.T) {
-	result := elseIfStatement(2, 4)
-	if !result {
-		t.Errorf("expected true")
-	}
+	t.Run("2, 4", testElseIfStatement(2, 4, true))
+	t.Run("2, 4", testElseIfStatement(4, 3, false))
+	t.Run("2, 4", testElseIfStatement(1, 1, true))
+}
 
-	result = elseIfStatement(4, 3)
-	if result {
-		t.Errorf("expected false")
-	}
-
-	result = elseIfStatement(1, 1)
-	if !result {
-		t.Errorf("expected true")
+func testElseIfStatement(x int, y int, expected bool) func(*testing.T) {
+	return func(t *testing.T) {
+		result := elseIfStatement(x, y)
+		if result != expected {
+			t.Errorf("exptected %v, but got %v", expected, result)
+		}
 	}
 }
 
@@ -189,5 +187,13 @@ func TestWorkWithArray(t *testing.T) {
 
 	if result != expectedArray {
 		t.Errorf("expected %v instead got %v", expectedArray, result)
+	}
+}
+
+func TestGet4Element(t *testing.T) {
+	var sBig [5]int = [5]int{1, -231, 24, 49, 6}
+	result := get4Element(sBig)
+	if result != 49 {
+		t.Errorf("expected %v instead got %v", 49, result)
 	}
 }
