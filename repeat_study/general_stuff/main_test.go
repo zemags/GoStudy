@@ -197,3 +197,10 @@ func TestGet4Element(t *testing.T) {
 		t.Errorf("expected %v instead got %v", 49, result)
 	}
 }
+
+func TestSumOfTree(t *testing.T) {
+	result := sumOfTree(745)
+	if result != 16 {
+		t.Errorf("expected %v instead got %v", 16, result)
+	}
+}

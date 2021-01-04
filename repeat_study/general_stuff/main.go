@@ -271,3 +271,11 @@ func workWithArray(workArray [10]uint8, idxArray [6]uint8) [10]uint8 {
 func get4Element(sBig [5]int) int {
 	return sBig[3]
 }
+
+func sumOfTree(i int) int {
+	var a, b, c int
+	a = i / 100
+	b = i % 100 / 10
+	c = i % 10
+	return a + b + c
+}
