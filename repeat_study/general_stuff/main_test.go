@@ -204,3 +204,10 @@ func TestSumOfTree(t *testing.T) {
 		t.Errorf("expected %v instead got %v", 16, result)
 	}
 }
+
+func TestReverseNumber(t *testing.T) {
+	result := reverseNumber(123)
+	if result != "321" {
+		t.Errorf("expected %v instead got %v", 321, result)
+	}
+}

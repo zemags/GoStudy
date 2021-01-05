@@ -279,3 +279,11 @@ func sumOfTree(i int) int {
 	c = i % 10
 	return a + b + c
 }
+
+func reverseNumber(i int) string {
+	var a, b, c int
+	a = i / 100
+	b = i % 100 / 10
+	c = i % 10
+	return fmt.Sprintf("%d%d%d", c, b, a)
+}
