@@ -211,3 +211,10 @@ func TestReverseNumber(t *testing.T) {
 		t.Errorf("expected %v instead got %v", 321, result)
 	}
 }
+
+func TestCountHoursAndMinutes(t *testing.T) {
+	result := countHoursAndMinutes(13257)
+	if result != "3 40" {
+		t.Errorf("expected %v instead got %v", 13257, result)
+	}
+}

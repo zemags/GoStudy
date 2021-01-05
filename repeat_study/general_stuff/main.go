@@ -30,7 +30,8 @@ func main() {
 	// fmt.Println(lst1, lst2)
 
 	// fmt.Println(variable, sentence)
-	fmt.Println(countElements([]int{1, 3, 3, 1, 0}))
+	// fmt.Println(countElements([]int{1, 3, 3, 1, 0}))
+	fmt.Println(countHoursAndMinutes(13257))
 }
 
 func appendToList(lst []int, value int) []int {
@@ -286,4 +287,13 @@ func reverseNumber(i int) string {
 	b = i % 100 / 10
 	c = i % 10
 	return fmt.Sprintf("%d%d%d", c, b, a)
+}
+
+func countHoursAndMinutes(i int) string {
+	var hours, minutes int
+	if i > 0 && i < 86399 {
+		hours = i / 60 / 60
+		minutes = (i - hours*60*60) / 60
+	}
+	return fmt.Sprintf("%d %d", hours, minutes)
 }
