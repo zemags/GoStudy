@@ -312,3 +312,13 @@ func ifTriangleRight(a int, b int, c int) string {
 		return notRight
 	}
 }
+
+func ifTriangleExist(a int, b int, c int) string {
+	exist := "Существует"
+	notExist := "Не существует"
+
+	if a+b > c && a+c > b && b+c > a {
+		return exist
+	}
+	return notExist
+}

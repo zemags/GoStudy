@@ -229,3 +229,14 @@ func TestIfTriangleRight(t *testing.T) {
 		t.Errorf("expected Непрямоугольный instead got %s", result)
 	}
 }
+
+func TestIfTriangleExist(t *testing.T) {
+	result := ifTriangleExist(4, 5, 6)
+	if result != "Существует" {
+		t.Errorf("expected Существует instead got %s", result)
+	}
+	result = ifTriangleExist(2, 1, 1)
+	if result != "Не существует" {
+		t.Errorf("expected Не существует instead got %s", result)
+	}
+}
