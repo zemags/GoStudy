@@ -218,3 +218,14 @@ func TestCountHoursAndMinutes(t *testing.T) {
 		t.Errorf("expected %v instead got %v", 13257, result)
 	}
 }
+
+func TestIfTriangleRight(t *testing.T) {
+	result := ifTriangleRight(6, 8, 10)
+	if result != "Прямоугольный" {
+		t.Errorf("expected Прямоугольный instead got %s", result)
+	}
+	result = ifTriangleRight(3, 2, 10)
+	if result != "Непрямоугольный" {
+		t.Errorf("expected Непрямоугольный instead got %s", result)
+	}
+}

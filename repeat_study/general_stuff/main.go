@@ -297,3 +297,18 @@ func countHoursAndMinutes(i int) string {
 	}
 	return fmt.Sprintf("%d %d", hours, minutes)
 }
+
+func ifTriangleRight(a int, b int, c int) string {
+	right := "Прямоугольный"
+	notRight := "Непрямоугольный"
+	switch {
+	case a*a+b*b == c*c:
+		return right
+	case a*a+c*c == b*b:
+		return right
+	case b*b+c*c == a*a:
+		return right
+	default:
+		return notRight
+	}
+}
