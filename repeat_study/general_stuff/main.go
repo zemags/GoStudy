@@ -336,3 +336,21 @@ func countZeros(s []int) int {
 	}
 	return count
 }
+
+func countMinValue(s []int) int {
+	var count, minValue int
+	for i := 0; i < len(s); i++ {
+		if i+1 == len(s) {
+			break
+		}
+		if s[i+1] <= s[i] {
+			minValue = s[i+1]
+		}
+	}
+	for _, i := range s {
+		if i == minValue {
+			count++
+		}
+	}
+	return count
+}

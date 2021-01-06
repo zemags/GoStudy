@@ -247,3 +247,10 @@ func TestCountZeros(t *testing.T) {
 		t.Errorf("expected 2 instead got %d", result)
 	}
 }
+
+func TestCountMinValue(t *testing.T) {
+	result := countMinValue([]int{3, 4, 5, 3, 6, 4, 3, 3, 4, 3, 2, 3, 2})
+	if result != 2 {
+		t.Errorf("expected 2 instead got %d", result)
+	}
+}
