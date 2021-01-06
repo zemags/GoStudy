@@ -354,3 +354,21 @@ func countMinValue(s []int) int {
 	}
 	return count
 }
+
+func digitalNumberCode(x int) int {
+	initial := 10000000
+	s := 0
+
+	for i := 0; i < 8; i++ {
+		current := x / initial
+		if current > 0 {
+			x = x - current*initial
+		}
+		initial = initial / 10
+		if current != 0 {
+			s += current
+		}
+	}
+	x = (s-s%10)/10 + (s - (s - s%10))
+	return x
+}

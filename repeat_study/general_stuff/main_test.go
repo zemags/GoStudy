@@ -254,3 +254,10 @@ func TestCountMinValue(t *testing.T) {
 		t.Errorf("expected 2 instead got %d", result)
 	}
 }
+
+func TestDigitalNumberCode(t *testing.T) {
+	result := digitalNumberCode(3456)
+	if result != 9 {
+		t.Errorf("expected 9 instead got %d", result)
+	}
+}
