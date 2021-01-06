@@ -240,3 +240,10 @@ func TestIfTriangleExist(t *testing.T) {
 		t.Errorf("expected Не существует instead got %s", result)
 	}
 }
+
+func TestCountZeros(t *testing.T) {
+	result := countZeros([]int{2, 3, 4, 0, 2, 0})
+	if result != 2 {
+		t.Errorf("expected 2 instead got %d", result)
+	}
+}

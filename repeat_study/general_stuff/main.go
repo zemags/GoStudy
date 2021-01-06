@@ -322,3 +322,17 @@ func ifTriangleExist(a int, b int, c int) string {
 	}
 	return notExist
 }
+
+// func arithmeticMean(a int, b int) string {
+// 	if
+// }
+
+func countZeros(s []int) int {
+	var count int
+	for _, i := range s {
+		if i == 0 {
+			count++
+		}
+	}
+	return count
+}
