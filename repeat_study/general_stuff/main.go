@@ -401,3 +401,16 @@ func calcDivisor(a int, b int) string {
 	}
 	return fmt.Sprintf("NO %d", maxValue)
 }
+
+func rightSuffix(i int) string {
+	switch {
+	case i%10 == 0 || (i >= 10 && i <= 20) || (i%10 == 5 && i >= 10) || (i > 20 && (i%10) >= 6 && (i%10) <= 9):
+		return fmt.Sprintf("%d korov", i)
+	case (i%10 == 2 || i%10 == 3 || i%10 == 4) && (i < 10 || i > 20):
+		return fmt.Sprintf("%d korovy", i)
+	case i%10 == 1:
+		return fmt.Sprintf("%d korova", i)
+	default:
+		return fmt.Sprintf("%d korova", i)
+	}
+}

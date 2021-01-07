@@ -277,5 +277,39 @@ func TestCalcDivisor(t *testing.T) {
 	if result != "YES 42" {
 		t.Errorf("expected YES instead got %s", result)
 	}
+}
 
+func TestRightSuffix(t *testing.T) {
+	result := rightSuffix(100)
+	if result != "100 korov" {
+		t.Errorf("expected 10 korov instead got %s", result)
+	}
+	result = rightSuffix(1)
+	if result != "1 korova" {
+		t.Errorf("expected 1 korova instead got %s", result)
+	}
+	result = rightSuffix(2)
+	if result != "2 korovy" {
+		t.Errorf("expected 2 korovy instead got %s", result)
+	}
+	result = rightSuffix(22)
+	if result != "22 korovy" {
+		t.Errorf("expected 22 korovy instead got %s", result)
+	}
+	result = rightSuffix(4)
+	if result != "4 korovy" {
+		t.Errorf("expected 4 korovy instead got %s", result)
+	}
+	result = rightSuffix(25)
+	if result != "25 korov" {
+		t.Errorf("expected 25 korov instead got %s", result)
+	}
+	result = rightSuffix(29)
+	if result != "29 korov" {
+		t.Errorf("expected 29 korov instead got %s", result)
+	}
+	result = rightSuffix(31)
+	if result != "31 korova" {
+		t.Errorf("expected 31 korova instead got %s", result)
+	}
 }
