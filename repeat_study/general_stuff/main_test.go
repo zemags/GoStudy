@@ -261,3 +261,21 @@ func TestDigitalNumberCode(t *testing.T) {
 		t.Errorf("expected 9 instead got %d", result)
 	}
 }
+
+func TestCalcDivisor(t *testing.T) {
+	result := calcDivisor(-7, -1)
+	if result != "YES -7" {
+		t.Errorf("expected YES instead got %s", result)
+	}
+
+	result = calcDivisor(100, 500)
+	if result != "YES 497" {
+		t.Errorf("expected YES instead got %s", result)
+	}
+
+	result = calcDivisor(-8, 43)
+	if result != "YES 42" {
+		t.Errorf("expected YES instead got %s", result)
+	}
+
+}

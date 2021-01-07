@@ -372,3 +372,32 @@ func digitalNumberCode(x int) int {
 	x = (s-s%10)/10 + (s - (s - s%10))
 	return x
 }
+
+func calcDivisor(a int, b int) string {
+	s := []int{}
+	maxValueExist := false
+	maxValue := 0
+
+	for i := a; i != b+1; i++ {
+		if i%7 == 0 {
+			s = append(s, i)
+		}
+	}
+
+	for i := 0; i < len(s); i++ {
+		if i+1 == len(s) {
+			maxValueExist = true
+			maxValue = s[i]
+			break
+		}
+		if s[i+1] > s[i] {
+			maxValueExist = true
+			maxValue = s[i+1]
+		}
+	}
+
+	if maxValueExist {
+		return fmt.Sprintf("YES %d", maxValue)
+	}
+	return fmt.Sprintf("NO %d", maxValue)
+}
