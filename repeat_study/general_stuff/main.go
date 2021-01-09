@@ -414,3 +414,31 @@ func rightSuffix(i int) string {
 		return fmt.Sprintf("%d korova", i)
 	}
 }
+
+func powTo2(a int) string {
+	x := 1
+	res := ""
+	res = res + fmt.Sprintf("%d", 1)
+	for i := 1; i != a+1; i++ {
+		for j := 1; j != i; j++ {
+			x = 2 * x
+			if x < a {
+				res = res + fmt.Sprintf(" %d", x)
+			} else {
+				break
+			}
+		}
+		if x > a {
+			break
+		}
+	}
+	return res
+
+	// 2nd var
+	// var n int
+	// fmt.Scan(&n)
+
+	// for i := 1; i <= n; i = i * 2 {
+	//     fmt.Printf("%v ", i)
+	// }
+}

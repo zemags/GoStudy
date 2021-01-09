@@ -313,3 +313,10 @@ func TestRightSuffix(t *testing.T) {
 		t.Errorf("expected 31 korova instead got %s", result)
 	}
 }
+
+func TestPowTo2(t *testing.T) {
+	result := powTo2(50)
+	if result != "1 2 4 8 16 32" {
+		t.Errorf("expected 1 2 4 8 16 32 instead got %s", result)
+	}
+}
