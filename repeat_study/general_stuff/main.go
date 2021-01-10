@@ -31,7 +31,7 @@ func main() {
 
 	// fmt.Println(variable, sentence)
 	// fmt.Println(countElements([]int{1, 3, 3, 1, 0}))
-	fmt.Println(countHoursAndMinutes(13257))
+	fmt.Println(placeInFibonacciLine(4))
 }
 
 func appendToList(lst []int, value int) []int {
@@ -458,4 +458,26 @@ func removeDigitFromNumber(a int, b int) int {
 		}
 	}
 	return result
+}
+
+func placeInFibonacciLine(a int) int {
+	fib1 := 1
+	fib2 := 1
+	i := 3
+	if a == 1 {
+		return 1
+	}
+	for {
+		fibSum := fib1 + fib2
+		fib1 = fib2
+		fib2 = fibSum
+
+		if fib2 == a {
+			break
+		} else if fib2 > a {
+			return -1
+		}
+		i++
+	}
+	return i
 }

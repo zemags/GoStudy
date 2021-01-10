@@ -327,3 +327,14 @@ func TestRemoveDigitFromNumber(t *testing.T) {
 		t.Errorf("expected 801272 instead got %d", result)
 	}
 }
+
+func TestPlaceInFibonacciLine(t *testing.T) {
+	result := placeInFibonacciLine(8)
+	if result != 6 {
+		t.Errorf("expected 6 instead got %d", result)
+	}
+	result = placeInFibonacciLine(7)
+	if result != -1 {
+		t.Errorf("expected -1 instead got %d", result)
+	}
+}
