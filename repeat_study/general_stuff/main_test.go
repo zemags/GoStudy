@@ -338,3 +338,14 @@ func TestPlaceInFibonacciLine(t *testing.T) {
 		t.Errorf("expected -1 instead got %d", result)
 	}
 }
+
+func TestArithmeticMean(t *testing.T) {
+	result := arithmeticMean(3, 5)
+	if result != "4" {
+		t.Errorf("expected 4 instead got %s", result)
+	}
+	result = arithmeticMean(2, 3)
+	if result != "2.5" {
+		t.Errorf("expected 2.5 instead got %s", result)
+	}
+}
