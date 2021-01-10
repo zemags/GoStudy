@@ -442,3 +442,20 @@ func powTo2(a int) string {
 	//     fmt.Printf("%v ", i)
 	// }
 }
+
+func removeDigitFromNumber(a int, b int) int {
+	var result int
+	shift := 1
+	for {
+		if a != 0 {
+			if a%10 != b {
+				result = result + (a%10)*shift
+				shift = shift * 10
+			}
+			a = a / 10
+		} else {
+			break
+		}
+	}
+	return result
+}

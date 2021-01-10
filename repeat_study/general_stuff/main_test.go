@@ -320,3 +320,10 @@ func TestPowTo2(t *testing.T) {
 		t.Errorf("expected 1 2 4 8 16 32 instead got %s", result)
 	}
 }
+
+func TestRemoveDigitFromNumber(t *testing.T) {
+	result := removeDigitFromNumber(38012732, 3)
+	if result != 801272 {
+		t.Errorf("expected 801272 instead got %d", result)
+	}
+}
