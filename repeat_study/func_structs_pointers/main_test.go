@@ -44,3 +44,23 @@ func TestSumInt(t *testing.T) {
 		t.Errorf("expected resLen 3, resSum 6 instead got %d %d", resLen, resSum)
 	}
 }
+
+func TestMultiplyPointersVals(t *testing.T) {
+	var x, y int = 2, 2
+	var x1 = &x // pointer to value
+	var x2 = &y
+	result := multiplyPointersVals(x1, x2)
+	if result != 4 {
+		t.Errorf("expected 4 instead got %d", result)
+	}
+}
+
+func TestShiftPointersVals(t *testing.T) {
+	var x, y int = 1, 2
+	var x1 = &x // pointer to value
+	var x2 = &y
+	res1, res2 := shiftPointersVals(x1, x2)
+	if res1 != 2 && res2 != 1 {
+		t.Errorf("expected 2, 1 instead got %d, %d", res1, res2)
+	}
+}

@@ -4,6 +4,7 @@ import "fmt"
 
 func main() {
 	fmt.Println(minimumFromFour(4, 5, 6, 7))
+	// multiplyPointersVals(2, 5)
 }
 
 func minimumFromFour(a, b, c, d int) int {
@@ -52,4 +53,14 @@ func sumInt(a ...int) (int, sum int) { // ..переменное число ар
 		sum += elem
 	}
 	return len(a), sum
+}
+
+func multiplyPointersVals(x1 *int, x2 *int) int {
+	x := *x1 * *x2
+	return x
+}
+
+func shiftPointersVals(x1 *int, x2 *int) (int, int) {
+	*x1, *x2 = *x2, *x1
+	return *x1, *x2
 }
