@@ -64,3 +64,46 @@ func shiftPointersVals(x1 *int, x2 *int) (int, int) {
 	*x1, *x2 = *x2, *x1
 	return *x1, *x2
 }
+
+// Structs
+type Circle struct {
+	x float64
+	y float64
+	r float64
+}
+
+func prepareCircle() float64 {
+	c := Circle{x: 2, y: 3, r: 10}
+	circleArea := c.getCircleArea()
+	return circleArea
+}
+
+func (c *Circle) getCircleArea() float64 {
+	return 3.14 * c.r * c.r
+}
+
+type Android struct {
+	On    bool
+	Ammo  int
+	Power int
+}
+
+func (a *Android) Shoot() bool {
+	if a.On {
+		if a.Ammo > 0 {
+			(*a).Ammo--
+			return true
+		}
+	}
+	return false
+}
+
+func (a *Android) RideBike() bool {
+	if a.On {
+		if a.Power > 0 {
+			(*a).Power--
+			return true
+		}
+	}
+	return false
+}

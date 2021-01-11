@@ -64,3 +64,44 @@ func TestShiftPointersVals(t *testing.T) {
 		t.Errorf("expected 2, 1 instead got %d, %d", res1, res2)
 	}
 }
+
+func TestPrepareCircle(t *testing.T) {
+	result := prepareCircle()
+	if result != 314 {
+		t.Errorf("expected 314 instead got %f", result)
+	}
+}
+
+func TestGetCircleArea(t *testing.T) {
+	testCircle := Circle{1, 1, 1}
+	result := testCircle.getCircleArea()
+	if result != 3.14 {
+		t.Errorf("expected 3.14 instead got %f", result)
+	}
+}
+
+func TestShoot(t *testing.T) {
+	testAndroid := Android{true, 1, 1}
+	result := testAndroid.Shoot()
+	if result != true {
+		t.Errorf("expected true instead got %t", result)
+	}
+	testAndroid = Android{false, 1, 1}
+	result = testAndroid.Shoot()
+	if result != false {
+		t.Errorf("expected false instead got %t", result)
+	}
+}
+
+func TestRideBike(t *testing.T) {
+	testAndroid := Android{true, 1, 1}
+	result := testAndroid.RideBike()
+	if result != true {
+		t.Errorf("expected true instead got %t", result)
+	}
+	testAndroid = Android{false, 1, 1}
+	result = testAndroid.RideBike()
+	if result != false {
+		t.Errorf("expected false instead got %t", result)
+	}
+}
