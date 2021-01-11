@@ -105,3 +105,18 @@ func TestRideBike(t *testing.T) {
 		t.Errorf("expected false instead got %t", result)
 	}
 }
+
+func TestIsStartsWithUpper(t *testing.T) {
+	result := isStartsWithUpper("Быть или не быть.")
+	if result != "Right" {
+		t.Errorf("expected Right instead got %s", result)
+	}
+	result = isStartsWithUpper("или не быть.")
+	if result != "Wrong" {
+		t.Errorf("expected Wrong instead got %s", result)
+	}
+	result = isStartsWithUpper("Быть или не быть")
+	if result != "Wrong" {
+		t.Errorf("expected Wrong instead got %s", result)
+	}
+}

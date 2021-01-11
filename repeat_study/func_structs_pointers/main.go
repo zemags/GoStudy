@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+	"unicode"
+)
 
 func main() {
 	fmt.Println(minimumFromFour(4, 5, 6, 7))
@@ -106,4 +110,16 @@ func (a *Android) RideBike() bool {
 		}
 	}
 	return false
+}
+
+// strings
+func isStartsWithUpper(text string) string {
+	text = strings.Trim(text, "\n\r")
+	runeText := []rune(text)
+
+	if unicode.IsUpper(runeText[0]) && string(runeText[len(runeText)-1]) == "." {
+		return "Right"
+	} else {
+		return "Wrong"
+	}
 }
