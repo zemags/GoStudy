@@ -7,8 +7,9 @@ import (
 )
 
 func main() {
-	fmt.Println(minimumFromFour(4, 5, 6, 7))
+	// fmt.Println(minimumFromFour(4, 5, 6, 7))
 	// multiplyPointersVals(2, 5)
+	fmt.Println(removeMoreThanOneLetter("zaabcbd"))
 }
 
 func minimumFromFour(a, b, c, d int) int {
@@ -119,7 +120,73 @@ func isStartsWithUpper(text string) string {
 
 	if unicode.IsUpper(runeText[0]) && string(runeText[len(runeText)-1]) == "." {
 		return "Right"
-	} else {
-		return "Wrong"
 	}
+	return "Wrong"
+}
+
+func palindrom(text string) string {
+	var reverseRuneText []string
+
+	runeText := []rune(strings.Trim(text, "\n\r"))
+
+	for i := len(runeText) - 1; i != -1; i-- {
+		reverseRuneText = append(reverseRuneText, string(runeText[i]))
+	}
+	if text == strings.Join(reverseRuneText, "") {
+		return "Палиндром"
+	}
+	return "Нет"
+}
+
+func partOfString(x, s string) int {
+	s = strings.Trim(s, "\n\r")
+	x = strings.Trim(x, "\n\r")
+	if strings.Count(x, s) > 0 {
+		return strings.Index(x, s)
+	}
+	return -1
+}
+
+func oddLetters(text string) string {
+	var result string
+	for idx, letter := range text { // in loop letter its rune!
+		if idx%2 != 0 {
+			result += string(letter)
+		}
+	}
+	return result
+}
+
+func removeMoreThanOneLetter(text string) string {
+	copyText := []rune(text)
+	for _, letter := range copyText {
+		if strings.Count(text, string(letter)) >= 2 {
+			text = strings.Replace(text, string(letter), "", -1)
+		}
+	}
+	return text
+}
+
+func checkPassword(text string) string {
+	const alpha = "abcdefghijklmnopqrstuvwxyz"
+	const digit = "1234567890"
+	flag := true
+	var isDigit, isLetter = false, false
+	if len(text) >= 5 {
+		for _, r := range text {
+			if !strings.Contains(alpha, strings.ToLower(string(r))) && !strings.Contains(digit, strings.ToLower(string(r))) {
+				flag = false
+			}
+			if strings.Contains(alpha, strings.ToLower(string(r))) {
+				isLetter = true
+			}
+			if strings.Contains(digit, strings.ToLower(string(r))) {
+				isDigit = true
+			}
+		}
+		if flag && isLetter && isDigit {
+			return "Ok"
+		}
+	}
+	return "Wrong password"
 }

@@ -120,3 +120,58 @@ func TestIsStartsWithUpper(t *testing.T) {
 		t.Errorf("expected Wrong instead got %s", result)
 	}
 }
+
+func TestPalindrom(t *testing.T) {
+	result := palindrom("топот")
+	if result != "Палиндром" {
+		t.Errorf("expected Палиндром instead got %s", result)
+	}
+	result = palindrom("топ")
+	if result != "Нет" {
+		t.Errorf("expected Нет instead got %s", result)
+	}
+}
+
+func TestPartOfString(t *testing.T) {
+	result := partOfString("hello", "he")
+	if result != 0 {
+		t.Errorf("expected 0 instead got %d", result)
+	}
+	result = partOfString("hello", "xy")
+	if result != -1 {
+		t.Errorf("expected -1 instead got %d", result)
+	}
+}
+
+func TestOddLetters(t *testing.T) {
+	result := oddLetters("ihgewlqlkot")
+	if result != "hello" {
+		t.Errorf("expected hello instead got %s", result)
+	}
+}
+
+func TestRemoveMoreThanOneLetter(t *testing.T) {
+	result := removeMoreThanOneLetter("zaabcbd")
+	if result != "zcd" {
+		t.Errorf("expected zcd instead got %s", result)
+	}
+}
+
+func TestCheckPassword(t *testing.T) {
+	result := checkPassword("fdsghdfgjsdDD1")
+	if result != "Ok" {
+		t.Errorf("expected Ok instead got %s", result)
+	}
+	result = checkPassword("fdsghdfgjsdDD")
+	if result != "Wrong password" {
+		t.Errorf("expected Wrong password instead got %s", result)
+	}
+	result = checkPassword("fds")
+	if result != "Wrong password" {
+		t.Errorf("expected Wrong password instead got %s", result)
+	}
+	result = checkPassword("fhjG*J424")
+	if result != "Wrong password" {
+		t.Errorf("expected Wrong password instead got %s", result)
+	}
+}
