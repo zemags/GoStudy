@@ -175,3 +175,25 @@ func TestCheckPassword(t *testing.T) {
 		t.Errorf("expected Wrong password instead got %s", result)
 	}
 }
+
+func TestDivide(t *testing.T) {
+	result := divide(4, 2)
+	if result != 2 {
+		t.Errorf("expected 2 instead got %d", result)
+	}
+
+	defer func() {
+		recover()
+	}()
+
+	divide(1, 0)
+
+	t.Error("did not panic")
+}
+
+func TestPutStartBetweenLetters(t *testing.T) {
+	result := putStartBetweenLetters("abc")
+	if result != "a*b*c" {
+		t.Errorf("expected a*b*c instead got %s", result)
+	}
+}

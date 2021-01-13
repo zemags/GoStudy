@@ -190,3 +190,23 @@ func checkPassword(text string) string {
 	}
 	return "Wrong password"
 }
+
+//errors panic
+func divide(a, b int) int {
+	if b == 0 {
+		panic("division by zero")
+	}
+	return a / b
+}
+
+func putStartBetweenLetters(s string) string {
+	res := ""
+	for i := 0; i < len(s); i++ {
+		if i == len(s)-1 {
+			res += string(s[i])
+		} else {
+			res += string(s[i]) + "*"
+		}
+	}
+	return res
+}
