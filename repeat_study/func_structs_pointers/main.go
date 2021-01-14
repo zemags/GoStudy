@@ -210,3 +210,22 @@ func putStartBetweenLetters(s string) string {
 	}
 	return res
 }
+
+//maps
+func simpleCache(s []int) string {
+	m := make(map[int]int)
+	result := ""
+	for _, a := range s {
+		if value, ok := m[a]; ok {
+			m[a] = value
+		} else {
+			m[a] = work(a)
+		}
+		result += fmt.Sprintf("%d ", m[a])
+	}
+	return strings.Trim(result, " ")
+}
+
+func work(i int) int {
+	return i * i
+}

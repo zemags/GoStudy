@@ -197,3 +197,17 @@ func TestPutStartBetweenLetters(t *testing.T) {
 		t.Errorf("expected a*b*c instead got %s", result)
 	}
 }
+
+func TestSimpleCache(t *testing.T) {
+	result := simpleCache([]int{1, 2, 3, 2})
+	if result != "1 4 9 4" {
+		t.Errorf("expected 1 4 9 4 instead got %s", result)
+	}
+}
+
+func TestWork(t *testing.T) {
+	result := work(2)
+	if result != 4 {
+		t.Errorf("expected 4 instead got %d", result)
+	}
+}
