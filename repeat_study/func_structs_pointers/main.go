@@ -247,3 +247,33 @@ func stringToInt(a string) int64 {
 	}
 	return int64(intResult)
 }
+
+//lambda functions
+func removeOddNumbers(i uint) uint {
+	var res int
+	fn := func(x uint) string {
+		var initial uint = 10000000
+		var result string
+		for i := 0; i < 8; i++ {
+			current := x / initial
+			if current > 0 {
+				x = x - current*initial
+			}
+			initial = initial / 10
+			if current != 0 {
+				if current%2 == 0 {
+					result += strconv.FormatUint(uint64(current), 10)
+				}
+			}
+		}
+		if result == "0" || result == "" {
+			return "100"
+		}
+		return result
+	}
+	res, err := strconv.Atoi(fn(i))
+	if err != nil {
+		panic(err)
+	}
+	return uint(res)
+}

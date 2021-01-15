@@ -218,3 +218,14 @@ func TestStringToInt(t *testing.T) {
 		t.Errorf("expected 10 instead got %d", result)
 	}
 }
+
+func TestRemoveOddNumbers(t *testing.T) {
+	result := removeOddNumbers(727178)
+	if result != 28 {
+		t.Errorf("expected 28 instead got %d", result)
+	}
+	result = removeOddNumbers(301)
+	if result != 100 {
+		t.Errorf("expected 100 instead got %d", result)
+	}
+}
