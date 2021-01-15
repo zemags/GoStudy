@@ -211,3 +211,10 @@ func TestWork(t *testing.T) {
 		t.Errorf("expected 4 instead got %d", result)
 	}
 }
+
+func TestStringToInt(t *testing.T) {
+	result := stringToInt("10abcn")
+	if result != 10 {
+		t.Errorf("expected 10 instead got %d", result)
+	}
+}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"unicode"
 )
@@ -228,4 +229,21 @@ func simpleCache(s []int) string {
 
 func work(i int) int {
 	return i * i
+}
+
+// types convertion
+func stringToInt(a string) int64 {
+	var stringResult string
+	var intResult int
+	for _, letter := range strings.Split(a, "") {
+		_, err := strconv.Atoi(letter)
+		if err == nil {
+			stringResult += string(letter)
+		}
+	}
+	intResult, err := strconv.Atoi(stringResult)
+	if err != nil {
+		panic(err)
+	}
+	return int64(intResult)
 }
