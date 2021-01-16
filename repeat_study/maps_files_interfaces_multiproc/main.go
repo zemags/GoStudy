@@ -123,3 +123,23 @@ func mainCalculator(value1, value2 interface{}, operation interface{}) string {
 	}
 	return stringResult
 }
+
+type Battery struct {
+	Charge string
+}
+
+func (b Battery) String() string {
+	count := strings.Count(b.Charge, "1")
+	return fmt.Sprintf(
+		"[%s%s]",
+		strings.Repeat(" ", 10-count),
+		strings.Repeat("X", count),
+	)
+}
+
+func fillBattery(s string) string {
+	batteryForTest := Battery{
+		Charge: s,
+	}
+	return fmt.Sprint(batteryForTest)
+}

@@ -82,3 +82,10 @@ func Test__getType(t *testing.T) {
 		t.Errorf("expected true instead got %t", result)
 	}
 }
+
+func TestFillBattery(t *testing.T) {
+	result := fillBattery("1000010011")
+	if result != "[      XXXX]" {
+		t.Errorf("expected [      XXXX] instead got %s", result)
+	}
+}
