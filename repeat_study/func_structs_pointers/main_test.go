@@ -197,35 +197,3 @@ func TestPutStartBetweenLetters(t *testing.T) {
 		t.Errorf("expected a*b*c instead got %s", result)
 	}
 }
-
-func TestSimpleCache(t *testing.T) {
-	result := simpleCache([]int{1, 2, 3, 2})
-	if result != "1 4 9 4" {
-		t.Errorf("expected 1 4 9 4 instead got %s", result)
-	}
-}
-
-func TestWork(t *testing.T) {
-	result := work(2)
-	if result != 4 {
-		t.Errorf("expected 4 instead got %d", result)
-	}
-}
-
-func TestStringToInt(t *testing.T) {
-	result := stringToInt("10abcn")
-	if result != 10 {
-		t.Errorf("expected 10 instead got %d", result)
-	}
-}
-
-func TestRemoveOddNumbers(t *testing.T) {
-	result := removeOddNumbers(727178)
-	if result != 28 {
-		t.Errorf("expected 28 instead got %d", result)
-	}
-	result = removeOddNumbers(301)
-	if result != 100 {
-		t.Errorf("expected 100 instead got %d", result)
-	}
-}
