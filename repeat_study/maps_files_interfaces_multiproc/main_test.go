@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"bytes"
+	"testing"
+)
 
 func TestSimpleCache(t *testing.T) {
 	result := simpleCache([]int{1, 2, 3, 2})
@@ -87,5 +90,13 @@ func TestFillBattery(t *testing.T) {
 	result := fillBattery("1000010011")
 	if result != "[      XXXX]" {
 		t.Errorf("expected [      XXXX] instead got %s", result)
+	}
+}
+
+func TestSumFromStdin(t *testing.T) {
+	buf := bytes.NewBufferString("1\n2\n10")
+	result := sumFromStdin(buf)
+	if result != 2 {
+		t.Errorf("expected 2 instead got %d", result)
 	}
 }

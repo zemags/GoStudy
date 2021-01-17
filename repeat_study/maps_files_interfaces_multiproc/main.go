@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -142,4 +145,30 @@ func fillBattery(s string) string {
 		Charge: s,
 	}
 	return fmt.Sprint(batteryForTest)
+}
+
+//work with files
+func sumFromStdin(stdin io.Reader) int {
+	reader := bufio.NewReader(stdin)
+	var result int
+
+	for {
+		line, _, err := reader.ReadLine() // without \n = End of line bytes
+		if err == io.EOF {
+			break
+		}
+		num, err := strconv.Atoi(string(line))
+		if err != nil {
+			panic(err)
+		}
+		result += num
+	}
+
+	writer := bufio.NewWriter(os.Stdout)
+	numberOfBytes, err := writer.WriteString(strconv.Itoa(result))
+	if err != nil {
+		panic(err)
+	}
+
+	return numberOfBytes
 }
