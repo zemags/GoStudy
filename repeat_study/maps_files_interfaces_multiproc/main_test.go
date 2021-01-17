@@ -111,3 +111,11 @@ func TestReadDirsAndFiles(t *testing.T) {
 		t.Errorf("expected 42 instead got %s", result)
 	}
 }
+
+func TestFindZero(t *testing.T) {
+	t.Skip()
+	result := findZero("")
+	if result != 10527 {
+		t.Errorf("expected 10527 instead got %d", result)
+	}
+}

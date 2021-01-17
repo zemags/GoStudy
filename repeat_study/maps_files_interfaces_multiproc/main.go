@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	readDirsAndFiles("")
+	findZero("")
 }
 
 //maps
@@ -210,6 +210,32 @@ func readDirsAndFiles(root string) string {
 	err := filepath.Walk(root, walkFunc)
 	if err != nil {
 		panic(err)
+	}
+	return result
+}
+
+func findZero(p string) int {
+	sliceOfString := []string{}
+	var result int
+
+	file, err := os.Open(p)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	reader := bufio.NewReaderSize(file, 500000)
+	line, _, err := reader.ReadLine() // without \n = End of line bytes
+	if err != nil {
+		panic(err)
+	}
+
+	sliceOfString = strings.Split(string(line), ";")
+
+	for idx, item := range sliceOfString {
+		if item == "0" {
+			result = idx + 1
+		}
 	}
 	return result
 }
