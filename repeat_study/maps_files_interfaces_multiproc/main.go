@@ -148,7 +148,7 @@ func fillBattery(s string) string {
 }
 
 //work with files
-func sumFromStdin(stdin io.Reader) int {
+func sumFromStdin(stdin io.Reader) (int, int) {
 	reader := bufio.NewReader(stdin)
 	var result int
 
@@ -170,5 +170,5 @@ func sumFromStdin(stdin io.Reader) int {
 		panic(err)
 	}
 
-	return numberOfBytes
+	return numberOfBytes, result
 }

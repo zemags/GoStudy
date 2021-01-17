@@ -95,8 +95,11 @@ func TestFillBattery(t *testing.T) {
 
 func TestSumFromStdin(t *testing.T) {
 	buf := bytes.NewBufferString("1\n2\n10")
-	result := sumFromStdin(buf)
-	if result != 2 {
-		t.Errorf("expected 2 instead got %d", result)
+	numOfBytes, result := sumFromStdin(buf)
+	if result != 13 {
+		t.Errorf("expected 13 instead got %d", result)
+	}
+	if numOfBytes != 2 {
+		t.Errorf("expected 2 instead got %d", numOfBytes)
 	}
 }
