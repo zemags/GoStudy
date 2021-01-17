@@ -103,3 +103,11 @@ func TestSumFromStdin(t *testing.T) {
 		t.Errorf("expected 2 instead got %d", numOfBytes)
 	}
 }
+
+func TestReadDirsAndFiles(t *testing.T) {
+	t.Skip()
+	result := readDirsAndFiles("")
+	if result != "42" {
+		t.Errorf("expected 42 instead got %s", result)
+	}
+}

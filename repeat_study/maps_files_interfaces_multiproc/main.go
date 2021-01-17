@@ -2,15 +2,17 @@ package main
 
 import (
 	"bufio"
+	"encoding/csv"
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
 
 func main() {
-	work(2)
+	readDirsAndFiles("")
 }
 
 //maps
@@ -171,4 +173,43 @@ func sumFromStdin(stdin io.Reader) (int, int) {
 	}
 
 	return numberOfBytes, result
+}
+
+func readDirsAndFiles(root string) string {
+	var result string
+	walkFunc := func(path string, info os.FileInfo, err error) error {
+		if err != nil && info.IsDir() { // ignore dirs
+			return nil // ignore current step
+		}
+
+		file, err := os.Open(path)
+		if err != nil {
+			panic(err)
+		}
+		defer file.Close()
+
+		reader := csv.NewReader(file)
+		reader.Comma = ','
+
+		count := 0
+		for {
+			record, err := reader.Read()
+			if err != nil {
+				break
+			}
+			if len(record) == 10 {
+				if count == 4 {
+					result = record[2]
+				}
+				count++
+			}
+		}
+		return nil
+	}
+
+	err := filepath.Walk(root, walkFunc)
+	if err != nil {
+		panic(err)
+	}
+	return result
 }
