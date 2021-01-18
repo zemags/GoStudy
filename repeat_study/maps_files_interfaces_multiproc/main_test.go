@@ -127,3 +127,11 @@ func TestCalcMeanPointForGroup(t *testing.T) {
 		t.Errorf("expected 3 instead got %f", result)
 	}
 }
+
+func TestGetJSONFieldsSum(t *testing.T) {
+	t.Skip()
+	result := getJSONFieldsSum("")
+	if result != 763804981288 {
+		t.Errorf("expected 763804981288 instead got %d", result)
+	}
+}

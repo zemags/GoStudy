@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	calcMeanPointForGroup("")
+	getJSONFieldsSum("")
 }
 
 //maps
@@ -277,5 +277,32 @@ func calcMeanPointForGroup(p string) float32 {
 	}
 
 	result = float32(pointsCount) / float32(studentsCount)
+	return result
+}
+
+func getJSONFieldsSum(p string) int {
+	var result int
+	type jsonStruct struct {
+		GlobalID int `json:"global_id"`
+	}
+
+	file, err := os.Open(p)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	dec := json.NewDecoder(file)
+	dec.Token() // read open bracket
+
+	for dec.More() {
+		var s jsonStruct
+		err := dec.Decode(&s)
+		if err != nil {
+			panic(err)
+		}
+		result += s.GlobalID
+	}
+	dec.Token() // read closing bracket
 	return result
 }
