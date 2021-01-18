@@ -3,8 +3,10 @@ package main
 import (
 	"bufio"
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -12,7 +14,7 @@ import (
 )
 
 func main() {
-	findZero("")
+	calcMeanPointForGroup("")
 }
 
 //maps
@@ -237,5 +239,43 @@ func findZero(p string) int {
 			result = idx + 1
 		}
 	}
+	return result
+}
+
+func calcMeanPointForGroup(p string) float32 {
+	type studentInfo struct {
+		Rating []int
+	}
+	type group struct {
+		Students []studentInfo
+	}
+
+	var (
+		jsonStruct  group
+		pointsCount int
+		result      float32
+	)
+
+	file, err := os.Open(p)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	data, err := ioutil.ReadAll(file)
+	if err != nil {
+		panic(err)
+	}
+
+	if err := json.Unmarshal(data, &jsonStruct); err != nil {
+		panic(err)
+	}
+	studentsCount := len(jsonStruct.Students)
+
+	for _, student := range jsonStruct.Students {
+		pointsCount += len(student.Rating)
+	}
+
+	result = float32(pointsCount) / float32(studentsCount)
 	return result
 }

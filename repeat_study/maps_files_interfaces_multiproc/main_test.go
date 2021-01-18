@@ -119,3 +119,11 @@ func TestFindZero(t *testing.T) {
 		t.Errorf("expected 10527 instead got %d", result)
 	}
 }
+
+func TestCalcMeanPointForGroup(t *testing.T) {
+	t.Skip()
+	result := calcMeanPointForGroup("")
+	if result != 3 {
+		t.Errorf("expected 3 instead got %f", result)
+	}
+}
