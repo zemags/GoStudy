@@ -11,10 +11,11 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
-	getJSONFieldsSum("")
+	fmt.Println(timeToString("1986-04-16T05:20:00+06:00"))
 }
 
 //maps
@@ -305,4 +306,59 @@ func getJSONFieldsSum(p string) int {
 	}
 	dec.Token() // read closing bracket
 	return result
+}
+
+//work with time
+func timeToString(s string) string {
+	givenTime, err := time.Parse(time.RFC3339, s)
+	if err != nil {
+		panic(err)
+	}
+	return givenTime.Format(time.UnixDate)
+}
+
+func addDayToTime(s string) string {
+	const layout = "2006-01-02 15:04:05" // REFERNCE TIME
+	givenTime, err := time.Parse(layout, s)
+	if err != nil {
+		panic(err)
+	}
+	if givenTime.Hour() < 13 {
+		return s
+	}
+	givenTime = givenTime.AddDate(0, 0, 1)
+	return givenTime.Format(layout)
+}
+
+func durBtwnTwoDates(s string) string {
+	const layout = "02.01.2006 15:04:05"
+	sliceString := strings.Split(s, ",")
+	firstDate := parseDate(sliceString[0], layout)
+	secondDate := parseDate(sliceString[1], layout)
+
+	if firstDate.Before(secondDate) {
+		return fmt.Sprintf("%v", secondDate.Sub(firstDate))
+	}
+	return fmt.Sprintf("%v", firstDate.Sub(secondDate))
+}
+
+func parseDate(s string, layout string) time.Time {
+	s = strings.Trim(s, " ")
+	date, err := time.Parse(layout, s)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(s, layout, date)
+	return date
+}
+
+func unixAddPeriod(s string) string {
+	const now = 1589570165
+	s = strings.Replace(strings.Replace(s, " мин. ", "m", 1), " сек.", "s", 1)
+	unixTime, err := time.ParseDuration(s)
+	if err != nil {
+		panic(err)
+	}
+	time2 := time.Unix(now, 0).UTC()
+	return time2.Add(unixTime).Format(time.UnixDate)
 }

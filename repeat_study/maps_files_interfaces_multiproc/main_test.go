@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"testing"
+	"time"
 )
 
 func TestSimpleCache(t *testing.T) {
@@ -133,5 +134,53 @@ func TestGetJSONFieldsSum(t *testing.T) {
 	result := getJSONFieldsSum("")
 	if result != 763804981288 {
 		t.Errorf("expected 763804981288 instead got %d", result)
+	}
+}
+
+func TestTimeToString(t *testing.T) {
+	result := timeToString("1986-04-16T05:20:00+06:00")
+	if result != "Wed Apr 16 05:20:00 +06 1986" {
+		t.Errorf("expected 1Wed Apr 16 05:20:00 +06 1986 instead got %s", result)
+	}
+}
+
+func TestAddDayToTime(t *testing.T) {
+	result := addDayToTime("2020-05-15 08:00:00")
+	if result != "2020-05-15 08:00:00" {
+		t.Errorf("expected 2020-05-15 08:00:00 instead got %s", result)
+	}
+	result = addDayToTime("2020-05-15 13:01:00")
+	if result != "2020-05-16 13:01:00" {
+		t.Errorf("expected 2020-05-16 13:01:00 instead got %s", result)
+	}
+}
+
+func TestDurBtwnTwoDates(t *testing.T) {
+	result := durBtwnTwoDates("13.03.2018 14:00:15,12.03.2018 14:00:15")
+	if result != "24h0m0s" {
+		t.Errorf("expected 24h0m0s instead got %s", result)
+	}
+
+	result = durBtwnTwoDates("12.03.2018 14:00:15,13.03.2018 14:00:15")
+	if result != "24h0m0s" {
+		t.Errorf("expected 24h0m0s instead got %s", result)
+	}
+}
+
+func TestParseDate(t *testing.T) {
+	result := parseDate("13.03.2018 14:00:15", "02.01.2006 15:04:05")
+	if result != time.Date(2018, time.March, 13, 14, 0, 15, 0, time.UTC) {
+		t.Errorf("expected 2018-03-13 14:00:15 +0000 UTC instead got %v", result)
+	}
+}
+
+func TestUnixAddPeriod(t *testing.T) {
+	result := unixAddPeriod("12 мин. 13 сек.")
+	if result != "Fri May 15 19:28:18 UTC 2020" {
+		t.Errorf("expected Fri May 15 19:28:18 UTC 2020 instead got %v", result)
+	}
+	result = unixAddPeriod("80 мин. 15 сек.")
+	if result != "Fri May 15 20:36:20 UTC 2020" {
+		t.Errorf("expected Fri May 15 20:36:20 UTC 2020 instead got %v", result)
 	}
 }
