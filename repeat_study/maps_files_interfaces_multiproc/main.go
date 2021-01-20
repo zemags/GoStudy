@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	fmt.Println(timeToString("1986-04-16T05:20:00+06:00"))
+	fmt.Println("")
 }
 
 //maps
@@ -348,7 +348,6 @@ func parseDate(s string, layout string) time.Time {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(s, layout, date)
 	return date
 }
 
@@ -361,4 +360,16 @@ func unixAddPeriod(s string) string {
 	}
 	time2 := time.Unix(now, 0).UTC()
 	return time2.Add(unixTime).Format(time.UnixDate)
+}
+
+//gorutines and channels
+func getFromChannel(ch chan int8, n int8) {
+	ch <- n + 1
+}
+
+func fiveTimeStringChannel(ch chan string, s string) {
+	for i := 0; i < 5; i++ {
+		ch <- s + " "
+	}
+	close(ch)
 }

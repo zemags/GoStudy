@@ -181,6 +181,38 @@ func TestUnixAddPeriod(t *testing.T) {
 	}
 	result = unixAddPeriod("80 мин. 15 сек.")
 	if result != "Fri May 15 20:36:20 UTC 2020" {
-		t.Errorf("expected Fri May 15 20:36:20 UTC 2020 instead got %v", result)
+		t.Errorf("expected Fri May 15 19:28:18 UTC 2020 instead got %v", result)
 	}
 }
+
+func TestGetFromChannel(t *testing.T) {
+	var result int8
+	channel := make(chan int8, 1)
+	getFromChannel(channel, 1)
+	result = <-channel
+	close(channel)
+	if result != 2 {
+		t.Errorf("expect 2 got %d", result)
+	}
+}
+
+func TestFiveTimeStringChannel(t *testing.T) {
+	var result string
+	channel := make(chan string, 5)
+
+	go fiveTimeStringChannel(channel, "a")
+
+	for val := range channel {
+		result += val
+	}
+
+	if result != "a a a a a " {
+		t.Errorf("expect aaaaa  got %s", result)
+	}
+}
+
+// func TestRemoveDuplicates(t *testing.T) {
+// 	var inputStream, outputStream chan string
+// 	removeDuplicates(inputStream, outputStream)
+
+// }
