@@ -15,7 +15,14 @@ import (
 )
 
 func main() {
-	fmt.Println("")
+	inputStream := make(chan string)
+	outputStream := make(chan string)
+	go inputValues(inputStream)
+	go removeDuplicates(inputStream, outputStream)
+
+	for val := range outputStream {
+		fmt.Println(val)
+	}
 }
 
 //maps
@@ -372,4 +379,22 @@ func fiveTimeStringChannel(ch chan string, s string) {
 		ch <- s + " "
 	}
 	close(ch)
+}
+
+func inputValues(inputStream chan string) {
+	for _, v := range []string{"1", "1", "2", "3", "3", "4", "4", "5", "6"} {
+		inputStream <- v
+	}
+	close(inputStream)
+}
+
+func removeDuplicates(inputStream, outputStream chan string) {
+	lastValue := ""
+	for v := range inputStream {
+		if v != lastValue {
+			outputStream <- v
+			lastValue = v
+		}
+	}
+	close(outputStream)
 }
