@@ -237,3 +237,22 @@ func TestRemoveDuplicates(t *testing.T) {
 		t.Errorf("expect aaaaa  got %s", result)
 	}
 }
+
+func TestSyncChannel(t *testing.T) {
+	result := syncChannel()
+	if result != struct{}{} {
+		t.Errorf("expect empty struct got %v", result)
+	}
+}
+
+func TestWorkWithWaitGroup(t *testing.T) {
+	var resultSlice []uint8
+	newChannel := make(chan uint8, 2) // buffered channel with len 2
+	resultChannel := workWithWaitGroup(newChannel)
+	for i := range resultChannel {
+		resultSlice = append(resultSlice, i)
+	}
+	if len(resultSlice) != 2 {
+		t.Errorf("expect 2 got %d", len(resultSlice))
+	}
+}

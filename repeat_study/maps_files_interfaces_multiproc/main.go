@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -397,4 +398,34 @@ func removeDuplicates(inputStream, outputStream chan string) {
 		}
 	}
 	close(outputStream)
+}
+
+func syncChannel() struct{} {
+	channel := make(chan struct{}) // struct{} doesnt need memory
+
+	//create anonymous function and make it goroutine
+	go func(ch chan struct{}) {
+		func() {
+			// empty function
+			ch <- struct{}{}
+		}()
+		close(ch)
+	}(channel) // pass channel to anonymous function
+
+	return <-channel // read from channel to nowhere
+}
+
+func workWithWaitGroup(ch chan uint8) chan uint8 {
+	wg := sync.WaitGroup{}
+	wg.Add(2) // added number of goroutines
+
+	for i := 0; i < 2; i++ { // call goroutines in for loop
+		go func(waitgroup *sync.WaitGroup, channel chan uint8) {
+			defer waitgroup.Done() // current goroutine finished
+			channel <- 1
+		}(&wg, ch)
+	}
+	wg.Wait() // waiting all goroutines stopped
+	close(ch)
+	return ch
 }
