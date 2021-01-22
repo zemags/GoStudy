@@ -7,8 +7,10 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -16,14 +18,47 @@ import (
 )
 
 func main() {
-	inputStream := make(chan string)
-	outputStream := make(chan string)
-	go inputValues(inputStream)
-	go removeDuplicates(inputStream, outputStream)
+	const N = 20
 
-	for val := range outputStream {
-		fmt.Println(val)
+	fn := func(x int) int {
+		time.Sleep(time.Duration(rand.Int31n(N)) * time.Second)
+		return x * 2
 	}
+	in1 := make(chan int, N)
+	in2 := make(chan int, N)
+	out := make(chan int, N)
+
+	start := time.Now()
+	merge2Channels(fn, in1, in2, out, N+1)
+	for i := 0; i < N+1; i++ {
+		in1 <- i
+		in2 <- i
+	}
+
+	orderFail := false
+	EvenFail := false
+	for i, prev := 0, 0; i < N; i++ {
+		c := <-out
+		if c%2 != 0 {
+			EvenFail = true
+		}
+		if prev >= c && i != 0 {
+			orderFail = true
+		}
+		prev = c
+		fmt.Println(c)
+	}
+	if orderFail {
+		fmt.Println("порядок нарушен")
+	}
+	if EvenFail {
+		fmt.Println("Есть не четные")
+	}
+	duration := time.Since(start)
+	if duration.Seconds() > N {
+		fmt.Println("Время превышено")
+	}
+	fmt.Println("Время выполнения: ", duration)
 }
 
 //maps
@@ -428,4 +463,20 @@ func workWithWaitGroup(ch chan uint8) chan uint8 {
 	wg.Wait() // waiting all goroutines stopped
 	close(ch)
 	return ch
+}
+
+func printMemUsage() {
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	fmt.Printf("Alloc = %v MiB", bToMb(m.Alloc))
+	fmt.Printf("\tTotalAlloc = %v MiB", bToMb(m.TotalAlloc))
+	fmt.Printf("\tSys = %v MiB", bToMb(m.Sys))
+	fmt.Printf("\tNumGC = %v\n", m.NumGC)
+}
+
+func bToMb(b uint64) uint64 {
+	return b / 1024 / 1024
+}
+
+func merge2Channels(fn func(int) int, in1 <-chan int, in2 <-chan int, out chan<- int, n int) {
 }
