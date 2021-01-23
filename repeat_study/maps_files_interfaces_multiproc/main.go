@@ -479,4 +479,30 @@ func bToMb(b uint64) uint64 {
 }
 
 func merge2Channels(fn func(int) int, in1 <-chan int, in2 <-chan int, out chan<- int, n int) {
+	wg := &sync.WaitGroup{}
+	var firstSlice [n]int
+	secondSlice := make([]int, n)
+
+	wg.Add(2 * n)
+	for i := 0; i < n; i++ {
+		go worker(fn, in1, &firstSlice, i)
+		go worker(fn, in2, &secondSlice, i)
+		wg.Add(-2)
+	}
+	wg.Wait()
+
+	go func() {
+		for i := 0; i < n; i++ {
+			result := firstSlice[1] + secondSlice[2]
+			out <- result
+		}
+		close(out)
+	}()
+}
+
+func worker(fn func(int) int, ch <-chan int, mySlice *[]int, idx int) {
+	res := <-ch
+	res = fn(res)
+	mySlice = append(mySlice[:idx+1], mySlice[idx:]...)
+	mySlice[idx] = res
 }
