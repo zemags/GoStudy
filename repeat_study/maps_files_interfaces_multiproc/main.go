@@ -478,31 +478,62 @@ func bToMb(b uint64) uint64 {
 	return b / 1024 / 1024
 }
 
+type outStream struct {
+	index int
+	value int
+}
+
+type mySyncMap struct {
+	mx sync.Mutex
+	m  map[int]int
+}
+
 func merge2Channels(fn func(int) int, in1 <-chan int, in2 <-chan int, out chan<- int, n int) {
 	wg := &sync.WaitGroup{}
-	var firstSlice [n]int
-	secondSlice := make([]int, n)
+
+	createSyncMap := func() *mySyncMap {
+		return &mySyncMap{
+			m: make(map[int]int),
+		}
+	}
+
+	myMap1 := createSyncMap()
+	myMap2 := createSyncMap()
 
 	wg.Add(2 * n)
 	for i := 0; i < n; i++ {
-		go worker(fn, in1, &firstSlice, i)
-		go worker(fn, in2, &secondSlice, i)
+		go worker(fn, in1, myMap1, i)
+		go worker(fn, in2, myMap2, i)
 		wg.Add(-2)
 	}
 	wg.Wait()
 
 	go func() {
 		for i := 0; i < n; i++ {
-			result := firstSlice[1] + secondSlice[2]
+			temp1 := myMap1.Load(i)
+			temp2 := myMap2.Load(i)
+			result := temp1 + temp2
 			out <- result
 		}
 		close(out)
 	}()
 }
 
-func worker(fn func(int) int, ch <-chan int, mySlice *[]int, idx int) {
+func worker(fn func(int) int, ch <-chan int, myMap *mySyncMap, key int) {
 	res := <-ch
 	res = fn(res)
-	mySlice = append(mySlice[:idx+1], mySlice[idx:]...)
-	mySlice[idx] = res
+	myMap.Save(key, res)
+}
+
+func (sm *mySyncMap) Load(key int) int {
+	sm.mx.Lock()
+	defer sm.mx.Unlock()
+	val, _ := sm.m[key]
+	return val
+}
+
+func (sm *mySyncMap) Save(key, res int) {
+	sm.mx.Lock()
+	defer sm.mx.Unlock()
+	sm.m[key] = res
 }
