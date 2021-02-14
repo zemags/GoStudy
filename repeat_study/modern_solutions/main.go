@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
 func main() {
-	itPanic()
+	// itPanic()
 	// periodicSend()
+	reverseString("abc")
 
 }
 
@@ -22,8 +24,14 @@ func itPanic() {
 }
 
 func reverseString(s string) string {
-	fmt.Printf("Reverse string: %s", s)
-	return ""
+	var reverseRuneText []string
+	runeText := []rune(s)
+
+	for i := len(runeText) - 1; i != -1; i-- {
+		reverseRuneText = append(reverseRuneText, string(runeText[i]))
+	}
+	fmt.Printf("Reverse string: %s", strings.Join(reverseRuneText, ""))
+	return strings.Join(reverseRuneText, "")
 }
 
 func periodicSend() {
