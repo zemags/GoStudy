@@ -9,8 +9,9 @@ import (
 func main() {
 	// itPanic()
 	// periodicSend()
-	reverseString("abc")
-
+	// reverseString("abc")
+	// buffChan()
+	selectStatement()
 }
 
 func itPanic() {
@@ -53,4 +54,36 @@ func periodicSend() {
 	}
 	_, ok := <-ch
 	fmt.Println(ok)
+}
+
+func buffChan() {
+	buffCh := make(chan int, 5)
+	buffCh <- 3 //FIFO
+	buffCh <- 2
+	fmt.Println(<-buffCh) // 3
+	//buu channels block when the are either full or empty
+}
+
+func waitAndSend(v, i int) chan int {
+	outCh := make(chan int)
+	child := func(v, i int) {
+		time.Sleep(time.Duration(i) * time.Second)
+		outCh <- v + 1
+	}
+	go child(1, 3)
+	return outCh
+}
+
+func selectStatement() {
+	ic := make(chan int)
+	select {
+	case v1 := <-waitAndSend(3, 2):
+		fmt.Println(v1)
+	case v2 := <-waitAndSend(5, 1):
+		fmt.Println(v2)
+	case ic <- 23:
+		fmt.Println(ic)
+	default:
+		fmt.Println("all chan are slow")
+	}
 }
