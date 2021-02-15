@@ -11,13 +11,14 @@ func main() {
 	// periodicSend()
 	// reverseString("abc")
 	// buffChan()
-	selectStatement()
+	// selectStatement()
+	car()
 }
 
 func itPanic() {
-	defer func() {
+	defer func() { // catch the panic
 		if err := recover(); err != nil {
-			fmt.Println(err) //A panic happend
+			fmt.Println(err) // A panic happend
 			fmt.Println("Recovered from panic")
 		}
 	}()
@@ -61,7 +62,7 @@ func buffChan() {
 	buffCh <- 3 //FIFO
 	buffCh <- 2
 	fmt.Println(<-buffCh) // 3
-	//buu channels block when the are either full or empty
+	//buffCh channels block when the are either full or empty
 }
 
 func waitAndSend(v, i int) chan int {
@@ -86,4 +87,59 @@ func selectStatement() {
 	default:
 		fmt.Println("all chan are slow")
 	}
+}
+
+type carInterface interface {
+	createCar(model string) string
+	changeColor(color string) string
+}
+
+type carStruct struct {
+	Model string
+	Color string
+}
+
+// embedding
+type embeddingStruct struct {
+	*carStruct
+}
+
+func carConstructor(model, color string) *carStruct {
+	return &carStruct{
+		Model: model,
+		Color: color,
+	}
+}
+
+func (c *carStruct) createCar() string {
+	return fmt.Sprintf("A %s was create", c.Model)
+}
+
+func (c *carStruct) changeColor(color string) string {
+	return fmt.Sprintf("%s color is now %s", c.Model, color)
+}
+
+func car() {
+	c := &carStruct{ // like new(carStruct)
+		Model: "forst",
+		Color: "red",
+	}
+	fmt.Println(c.createCar())
+	fmt.Printf("Car color is %s\n", c.Color)
+	fmt.Println(c.changeColor("yellow"))
+
+	cC := carConstructor("merdedes", "green")
+	fmt.Println(cC.createCar())
+	fmt.Printf("Car color is %s\n", cC.Color)
+	fmt.Println(cC.changeColor("yellow"))
+
+	cEmb := embeddingStruct{
+		carStruct: &carStruct{
+			Model: "bvv",
+			Color: "blue",
+		},
+	}
+	fmt.Println(cEmb.createCar())
+	fmt.Printf("Car color is %s\n", cEmb.Color)
+	fmt.Println(cEmb.changeColor("yellow"))
 }
