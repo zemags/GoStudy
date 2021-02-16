@@ -2,10 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"first_web_app/app/server"
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/zemags/GoStudy/repeat_study/modern_solutions/first_web_app/app/server"
 )
 
 type configuration struct {
