@@ -28,7 +28,8 @@ func init() {
 
 func main() {
 	conf := config.NewConfig()
-	db, err := sql.Open("mysql", conf.DBParams.MysqlDBName)
+	mysqlConn := fmt.Sprintf("%s:%s@/%s", conf.DBParams.User, conf.DBParams.Password, conf.DBParams.DBName)
+	db, err := sql.Open("mysql", mysqlConn)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -3,7 +3,10 @@ package config
 import "os"
 
 type dbConfig struct {
-	MysqlDBName string
+	User     string
+	Password string
+	DBName   string
+	SSLMode  string
 }
 
 // Config collect all different opts
@@ -15,7 +18,10 @@ type Config struct {
 func NewConfig() *Config {
 	return &Config{
 		DBParams: dbConfig{
-			MysqlDBName: getEnv("MYSQL_DB_NAME", ""),
+			User:     getEnv("USER", ""),
+			Password: getEnv("PASSWORD", ""),
+			DBName:   getEnv("DB_NAME", ""),
+			SSLMode:  getEnv("SSL_MODE", ""),
 		},
 	}
 }
