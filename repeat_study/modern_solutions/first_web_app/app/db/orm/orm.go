@@ -10,13 +10,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type planetMass struct {
-	gorm.Model
-	id       int
-	planetId int
-	radius   int
-}
-
 // init is invoked before main()
 func init() {
 	// loads values from .env into the system
@@ -33,17 +26,15 @@ func main() {
 		log.Fatal("failed to connect db")
 	}
 
-	// create table and migrate
-	db.AutoMigrate(&Comet{})
+	// create table and migrate/or get existing
+	db.AutoMigrate(&Comet{}, &Planet{})
 
 	// insert val
-	for _, comet := range comets {
-		db.Create(&comet)
-	}
+	// db.Create(&comets)
 
 	// read
 	var comet1 Comet
-	db.First(&comet1, 2) // finc comet with integer primary key 2
+	db.First(&comet1, 2) // find comet with integer primary key 2
 	fmt.Println(comet1)
 	db.First(&comet1, "comet_short_name = ?", "Lovejoy")
 	fmt.Println(comet1.CometShortName)
@@ -53,4 +44,15 @@ func main() {
 
 	// delelte
 	db.Delete(&comets, []int{3, 4, 5, 6, 7})
+
+	// select all
+	db.Find(&comets)
+	fmt.Println("\n", comets)
+	//select with where with or
+	var planets1 []Planet
+	db.Where("id = ?", 1).Or("id = ?", 2).Find(&planets1)
+	fmt.Println(planets1)
+	var planet1 Planet
+	db.First(&planet1, 1)
+	fmt.Println(">", planet1.planetShortName)
 }
