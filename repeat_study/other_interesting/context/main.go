@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// practise context
+// practice context
 
 func main() {
 	ctx := context.Background()
@@ -45,7 +45,7 @@ func sleepRandomContext(ctx context.Context, ch chan bool) {
 	select {
 	case <-ctx.Done():
 		// clean ram, signal(by channel) to all goroutines to stop
-		// its happed if timeout is over or doWorkContext or main
+		// its happend if timeout is over or doWorkContext or main
 		// call cancelFunction
 		fmt.Println("time to return all work is over")
 	case sleeptime := <-sleeptimeChan:
