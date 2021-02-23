@@ -19,6 +19,10 @@ func TestUnpackString(t *testing.T) {
 		{input: "aaa0b", expected: "aab"},
 		{input: "", expected: ""},
 		{input: "d\n5ab", expected: "d\n\n\n\n\nabc"},
+		{input: `qwe\4\5`, expected: `qwe45`},
+		{input: `qwe\45`, expected: `qwe44444`},
+		{input: `qwe\\5`, expected: `qwe\\\\\`},
+		{input: `qwe\\\3`, expected: `qwe\3`},
 	}
 	for _, test := range tests {
 		result, _ := unpackString(test.input)
