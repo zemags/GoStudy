@@ -13,33 +13,33 @@ func main() {
 
 func unpackString(s string) (string, error) {
 	sToRune := []rune(s)
-	var result strings.Builder
-	prevIsDigit := false
-	repeatTime := 0
+	var (
+		result     strings.Builder
+		repeatTime int
+	)
+
 	for idx, symbol := range sToRune {
-		ifSymbolDigit := unicode.IsDigit(symbol)
-		if ifSymbolDigit && idx == 0 {
-			return "", fmt.Errorf("unsupported input format for string: %s", s)
-		}
-		if idx != len(s) {
 
-			if !ifSymbolDigit {
+		if idx != len(s)-1 {
+			ifSymbolDigit := unicode.IsDigit(symbol)
+			ifNextSymbolDigit := unicode.IsDigit(sToRune[idx+1])
 
-				if prevIsDigit {
-					return "", fmt.Errorf("unsupported input format for string: %s", s)
+			if (ifSymbolDigit && idx == 0) || (ifSymbolDigit && ifNextSymbolDigit) {
+				return "", fmt.Errorf("unsupported input format for string: %s", s)
+			} else if !ifSymbolDigit {
+				prevIsDigit := false
 
-				} else if unicode.IsDigit(sToRune[idx+1]) && !prevIsDigit {
+				if ifNextSymbolDigit && !prevIsDigit {
 					repeatTime, _ = strconv.Atoi(string(sToRune[idx+1]))
+					prevIsDigit = true
 				} else {
 					repeatTime = 1
 				}
 				result.WriteString(strings.Repeat(string(symbol), repeatTime))
 				fmt.Println(string(symbol), repeatTime, result.String())
-				prevIsDigit = true
 			}
 		} else {
 			result.WriteString((string(symbol)))
-			prevIsDigit = false
 		}
 	}
 	return result.String(), nil
