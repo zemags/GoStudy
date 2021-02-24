@@ -36,7 +36,6 @@ func unpackString(s string) (string, error) {
 					repeatTime = 1
 				}
 				result.WriteString(strings.Repeat(string(symbol), repeatTime))
-				fmt.Println(string(symbol), repeatTime, result.String())
 			}
 		} else {
 			result.WriteString((string(symbol)))
