@@ -2,12 +2,9 @@ package main
 
 import (
 	"fmt"
-	"regexp"
 	"sort"
 	"strings"
 )
-
-var re = regexp.MustCompile(`(?i)[\d\+]+`)
 
 func main() {
 	// countWordsFreq()
@@ -20,11 +17,7 @@ func countWordsFreq(text string, freq int) (res []string, err error) {
 
 	tempMap := make(map[string]int)
 	for _, s := range strings.Split(text, " ") {
-		if _, inMap := tempMap[s]; !inMap {
-			tempMap[s] = 1
-		} else {
-			tempMap[s] = tempMap[s] + 1
-		}
+		tempMap[s]++
 	}
 
 	values := make([]int, 0, len(tempMap))
@@ -33,12 +26,17 @@ func countWordsFreq(text string, freq int) (res []string, err error) {
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(values)))
 
-	// tempSlice := []string{}
-	// for _, v := range values {
-
-	// }
-
-	fmt.Println(tempMap)
+	for _, v := range values {
+		tempSlice := []string{}
+		for key, val := range tempMap {
+			if val == v {
+				tempSlice = append(tempSlice, key)
+				delete(tempMap, key)
+			}
+		}
+		sort.Strings(tempSlice)
+		res = append(res, tempSlice...)
+	}
 	return res, nil
 }
 
