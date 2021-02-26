@@ -15,7 +15,7 @@ func TestCountWordsFreq(t *testing.T) {
 	}{
 		{
 			input:    `John is son is, John second. son-of John second is, second`,
-			expected: []string{"John", "is,", "second", "is", "second.", "son", "son-of"},
+			expected: []string{"John", "is,", "second", "is"},
 			freq:     4,
 		},
 	}

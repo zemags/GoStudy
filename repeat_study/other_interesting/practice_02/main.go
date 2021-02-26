@@ -16,7 +16,7 @@ func countWordsFreq(text string, freq int) (res []string, err error) {
 	}
 
 	tempMap := make(map[string]int)
-	for _, s := range strings.Split(text, " ") {
+	for _, s := range strings.Split(strings.Join(strings.Fields(text), " "), " ") {
 		tempMap[s]++
 	}
 
@@ -25,8 +25,9 @@ func countWordsFreq(text string, freq int) (res []string, err error) {
 		values = append(values, v)
 	}
 	sort.Sort(sort.Reverse(sort.IntSlice(values)))
+	fmt.Println(values[:freq])
 
-	for _, v := range values {
+	for _, v := range values[:freq] {
 		tempSlice := []string{}
 		for key, val := range tempMap {
 			if val == v {
@@ -37,5 +38,5 @@ func countWordsFreq(text string, freq int) (res []string, err error) {
 		sort.Strings(tempSlice)
 		res = append(res, tempSlice...)
 	}
-	return res, nil
+	return res[:freq], nil
 }
