@@ -39,11 +39,3 @@ func countWordsFreq(text string, freq int) (res []string, err error) {
 	}
 	return res, nil
 }
-
-func pop(m map[string]int, key string) (int, bool) {
-	v, ok := m[key]
-	if ok {
-		delete(m, key)
-	}
-	return v, ok
-}
