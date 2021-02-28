@@ -31,8 +31,19 @@ func (s *SingleLinkedStruct) IsEmpty() bool {
 }
 
 // AddForward ...
-func (s *SingleLinkedStruct) AddForward() {
-
+func (s *SingleLinkedStruct) AddForward(v int) {
+	temp := &SingleLinkedStruct{}
+	p := &SingleLinkedStruct{}
+	temp.value = v
+	if reflect.DeepEqual(s, &SingleLinkedStruct{}) {
+		s = temp
+	} else {
+		p = s
+		switch p.next != nil {
+			p = p.next
+		}
+		s.next = temp
+	}
 }
 
 // AddBackword ...
@@ -58,4 +69,5 @@ func (s *SingleLinkedStruct) GetAFirst() {
 func main() {
 	singleLL := &SingleLinkedStruct{}
 	singleLL.IsEmpty()
+	singleLL.AddForward(1)
 }

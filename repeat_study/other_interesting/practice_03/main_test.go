@@ -18,3 +18,8 @@ func TestIsEmptyFalse(t *testing.T) {
 	result := notEmptyTestList.IsEmpty()
 	assert.Equal(t, false, result)
 }
+
+func TestAddForward(t *testing.T) {
+	testList := SingleLinkedStruct{}
+	testList.AddForward(1)
+}
