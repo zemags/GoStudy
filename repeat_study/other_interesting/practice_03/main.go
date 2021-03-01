@@ -40,17 +40,17 @@ func (n *Node) AddForward(v int) {
 
 // AddBackword ...
 func (n *Node) AddBackword(v int) {
-	nextNode := &Node{}
+	nextNode := Node{}
 	nextNode.value = v
 	if n.IsEmpty() {
-		*n = *nextNode
+		*n = nextNode
 		fmt.Println(*n, n)
 	} else {
 		oldNode := n
 		for oldNode.next != nil {
 			oldNode = oldNode.next
 		}
-		oldNode.next = nextNode
+		oldNode.next = &nextNode
 	}
 	n.size++
 }
@@ -81,5 +81,5 @@ func main() {
 	singleLL.AddBackword(55)
 	singleLL.AddBackword(66)
 	singleLL.AddBackword(77)
-	singleLL.GetLen()
+	fmt.Println(singleLL.GetLen())
 }

@@ -8,15 +8,15 @@ import (
 
 func TestIsEmptyTrue(t *testing.T) {
 	emptyTestList := Node{}
-	result := emptyTestList.IsEmpty()
-	assert.Equal(t, true, result)
+	actual := emptyTestList.IsEmpty()
+	assert.Equal(t, true, actual)
 }
 
 func TestIsEmptyFalse(t *testing.T) {
 	notEmptyTestList := Node{}
 	notEmptyTestList.value = 1
-	result := notEmptyTestList.IsEmpty()
-	assert.Equal(t, false, result)
+	actual := notEmptyTestList.IsEmpty()
+	assert.Equal(t, false, actual)
 }
 
 func TestAddBackword(t *testing.T) {
@@ -26,4 +26,10 @@ func TestAddBackword(t *testing.T) {
 	assert.Equal(t, 1, testList.value)
 	testSecond := testList.next
 	assert.Equal(t, 2, testSecond.value)
+}
+
+func TestGetLen(t *testing.T) {
+	testList := &Node{}
+	actual := testList.GetLen()
+	assert.Equal(t, 0, actual)
 }
