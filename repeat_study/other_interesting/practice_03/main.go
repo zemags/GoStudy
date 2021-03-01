@@ -3,71 +3,83 @@
 package main
 
 import (
+	"fmt"
 	"reflect"
 )
 
-// SingleLinkedStruct ...
-type SingleLinkedStruct struct {
+// Node ...
+type Node struct {
+	size  int
 	value int
-	next  *SingleLinkedStruct
+	next  *Node
 }
 
 // SingleLinkedList ...
 type SingleLinkedList interface {
 	IsEmpty() bool
-	AddForward()
-	AddBackword()
+	AddForward(int)
+	AddBackword(int)
 	AddInto()
 	GetFirst()
 	GetAFirst() // get all items except first
+	GetLen() int
 }
 
 // IsEmpty ...
-func (s *SingleLinkedStruct) IsEmpty() bool {
-	if reflect.DeepEqual(s, &SingleLinkedStruct{}) {
+func (n *Node) IsEmpty() bool {
+	if reflect.DeepEqual(n, &Node{}) {
 		return true
 	}
 	return false
 }
 
 // AddForward ...
-func (s *SingleLinkedStruct) AddForward(v int) {
-	temp := &SingleLinkedStruct{}
-	p := &SingleLinkedStruct{}
-	temp.value = v
-	if reflect.DeepEqual(s, &SingleLinkedStruct{}) {
-		s = temp
-	} else {
-		p = s
-		switch p.next != nil {
-			p = p.next
-		}
-		s.next = temp
-	}
+func (n *Node) AddForward(v int) {
+
 }
 
 // AddBackword ...
-func (s *SingleLinkedStruct) AddBackword() {
-
+func (n *Node) AddBackword(v int) {
+	nextNode := &Node{}
+	nextNode.value = v
+	if n.IsEmpty() {
+		*n = *nextNode
+		fmt.Println(*n, n)
+	} else {
+		oldNode := n
+		for oldNode.next != nil {
+			oldNode = oldNode.next
+		}
+		oldNode.next = nextNode
+	}
+	n.size++
 }
 
-// AddInto ...
-func (s *SingleLinkedStruct) AddInto() {
+// AddInto insert by index
+func (n *Node) AddInto() {
 
 }
 
 // GetFirst ...
-func (s *SingleLinkedStruct) GetFirst() {
+func (n *Node) GetFirst() {
 
 }
 
 // GetAFirst ...
-func (s *SingleLinkedStruct) GetAFirst() {
+func (n *Node) GetAFirst() {
 
 }
 
+// GetLen ...
+func (n *Node) GetLen() int {
+	return n.size
+}
+
 func main() {
-	singleLL := &SingleLinkedStruct{}
+	singleLL := &Node{}
 	singleLL.IsEmpty()
-	singleLL.AddForward(1)
+	singleLL.AddBackword(55)
+	singleLL.AddBackword(66)
+	singleLL.AddBackword(77)
+	singleLL.GetLen()
 }
