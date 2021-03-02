@@ -4,7 +4,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 )
 
@@ -72,8 +71,11 @@ func (n *Node) GetFirst() (int, error) {
 }
 
 // GetAFirst ...
-func (n *Node) GetAFirst() {
-	fmt.Println(n)
+func (n *Node) GetAFirst() (*Node, error) {
+	if !n.IsEmpty() {
+		return n.next, nil
+	}
+	return &Node{}, errors.New("Empty list")
 }
 
 // GetLen ...
@@ -84,11 +86,26 @@ func (n *Node) GetLen() (int, error) {
 	return 0, errors.New("Empty list")
 }
 
+// DisplayList ...
+func DisplayList(n *Node) ([]int, error) {
+	if !n.IsEmpty() {
+		var s []int
+		for n != nil {
+			s = append(s, n.value)
+			n = n.next
+		}
+		return s, nil
+	}
+	return []int{}, errors.New("empty list")
+}
+
 func main() {
 	singleLL := &Node{}
 	singleLL.IsEmpty()
 	singleLL.AddBackword(55)
 	singleLL.AddBackword(66)
 	singleLL.AddBackword(77)
-	singleLL.GetAFirst()
+	// singleLL.GetAFirst()
+	// l, _ := DisplayList(singleLL)
+	// fmt.Println(l)
 }
