@@ -1,15 +1,18 @@
-// Singly linked list
+// Single linked list
 // [a|*]->[b|*]->[x]
 package main
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 )
 
+var size int
+
 // Node ...
 type Node struct {
-	size  int
+	idx   int
 	value int
 	next  *Node
 }
@@ -19,10 +22,10 @@ type SingleLinkedList interface {
 	IsEmpty() bool
 	AddForward(int)
 	AddBackword(int)
-	AddInto()
-	GetFirst()
+	AddInto(int, int)
+	GetFirst() (int, error)
 	GetAFirst() // get all items except first
-	GetLen() int
+	GetLen() (int, error)
 }
 
 // IsEmpty ...
@@ -35,16 +38,16 @@ func (n *Node) IsEmpty() bool {
 
 // AddForward ...
 func (n *Node) AddForward(v int) {
+	nextNode := Node{}
+	nextNode.value = v
 
 }
 
 // AddBackword ...
 func (n *Node) AddBackword(v int) {
-	nextNode := Node{}
-	nextNode.value = v
+	nextNode := Node{value: v, idx: size}
 	if n.IsEmpty() {
 		*n = nextNode
-		fmt.Println(*n, n)
 	} else {
 		oldNode := n
 		for oldNode.next != nil {
@@ -52,27 +55,33 @@ func (n *Node) AddBackword(v int) {
 		}
 		oldNode.next = &nextNode
 	}
-	n.size++
+	size++
 }
 
 // AddInto insert by index
-func (n *Node) AddInto() {
+func (n *Node) AddInto(v, idx int) {
 
 }
 
 // GetFirst ...
-func (n *Node) GetFirst() {
-
+func (n *Node) GetFirst() (int, error) {
+	if !n.IsEmpty() {
+		return n.value, nil
+	}
+	return 0, errors.New("Empty list")
 }
 
 // GetAFirst ...
 func (n *Node) GetAFirst() {
-
+	fmt.Println(n)
 }
 
 // GetLen ...
-func (n *Node) GetLen() int {
-	return n.size
+func (n *Node) GetLen() (int, error) {
+	if !n.IsEmpty() {
+		return size, nil
+	}
+	return 0, errors.New("Empty list")
 }
 
 func main() {
@@ -81,5 +90,5 @@ func main() {
 	singleLL.AddBackword(55)
 	singleLL.AddBackword(66)
 	singleLL.AddBackword(77)
-	fmt.Println(singleLL.GetLen())
+	singleLL.GetAFirst()
 }

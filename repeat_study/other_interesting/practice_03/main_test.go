@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestIsEmptyTrue(t *testing.T) {
@@ -28,8 +29,27 @@ func TestAddBackword(t *testing.T) {
 	assert.Equal(t, 2, testSecond.value)
 }
 
-func TestGetLen(t *testing.T) {
+func TestGetLenValid(t *testing.T) {
 	testList := &Node{}
-	actual := testList.GetLen()
-	assert.Equal(t, 0, actual)
+	testList.AddBackword(1)
+	_, err := testList.GetLen()
+	require.NoError(t, err)
+}
+
+func TestGetLenInvalid(t *testing.T) {
+	testList := &Node{}
+	_, err := testList.GetLen()
+	require.Error(t, err)
+}
+
+func TestGetFirstValid(t *testing.T) {
+	testList := &Node{value: 1}
+	_, err := testList.GetFirst()
+	require.NoError(t, err)
+}
+
+func TestGetFirstInvalid(t *testing.T) {
+	testList := &Node{}
+	_, err := testList.GetFirst()
+	require.Error(t, err)
 }
