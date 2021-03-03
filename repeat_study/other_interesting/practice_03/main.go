@@ -4,6 +4,8 @@ package main
 
 import (
 	"errors"
+	"fmt"
+	"log"
 	"reflect"
 )
 
@@ -23,7 +25,7 @@ type SingleLinkedList interface {
 	AddBackword(int)
 	AddInto(int, int)
 	GetFirst() (int, error)
-	GetAFirst() // get all items except first
+	GetAFirst() (*Node, error) // get all items except first
 	GetLen() (int, error)
 }
 
@@ -37,9 +39,14 @@ func (n *Node) IsEmpty() bool {
 
 // AddForward ...
 func (n *Node) AddForward(v int) {
-	nextNode := Node{}
-	nextNode.value = v
+	if n.IsEmpty() {
+		*n = Node{value: v, idx: size}
+	} else {
+		for i := 0; i < size; i++ {
 
+		}
+	}
+	fmt.Println()
 }
 
 // AddBackword ...
@@ -92,6 +99,7 @@ func DisplayList(n *Node) ([]int, error) {
 		var s []int
 		for n != nil {
 			s = append(s, n.value)
+			fmt.Println("idx", n.idx)
 			n = n.next
 		}
 		return s, nil
@@ -105,7 +113,11 @@ func main() {
 	singleLL.AddBackword(55)
 	singleLL.AddBackword(66)
 	singleLL.AddBackword(77)
-	// singleLL.GetAFirst()
-	// l, _ := DisplayList(singleLL)
-	// fmt.Println(l)
+	singleLL.AddForward(44)
+	_, err := singleLL.GetAFirst()
+	if err != nil {
+		log.Fatal(err)
+	}
+	l, _ := DisplayList(singleLL)
+	fmt.Println(l)
 }

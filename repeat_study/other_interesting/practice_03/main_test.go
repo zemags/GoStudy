@@ -57,9 +57,9 @@ func TestGetFirstInvalid(t *testing.T) {
 func TestGetAFirstValid(t *testing.T) {
 	expected := []int{2, 3}
 	testList := &Node{}
-	testList.AddBackword(1)
-	testList.AddBackword(2)
-	testList.AddBackword(3)
+	for _, i := range []int{1, 2, 3} {
+		testList.AddBackword(i)
+	}
 	testList, err := testList.GetAFirst()
 	require.NoError(t, err)
 	actual, _ := DisplayList(testList)
@@ -75,9 +75,9 @@ func TestGetAFirstInvalid(t *testing.T) {
 func TestDisplayListValid(t *testing.T) {
 	expected := []int{1, 2, 3}
 	testList := &Node{}
-	testList.AddBackword(1)
-	testList.AddBackword(2)
-	testList.AddBackword(3)
+	for _, i := range []int{1, 2, 3} {
+		testList.AddBackword(i)
+	}
 	actual, err := DisplayList(testList)
 	require.NoError(t, err)
 	assert.Equal(t, expected, actual)
