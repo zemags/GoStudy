@@ -43,10 +43,19 @@ func (n *Node) AddForward(v int) {
 		*n = Node{value: v, idx: size}
 	} else {
 		for i := 0; i < size; i++ {
+			if n.next != nil {
+				currentValue := n.value
+				nextNodes := n.next
+				fmt.Println(">", n.value, currentValue, nextNodes.value)
+			}
 
+			n = n.next
 		}
+		// fmt.Println(*n)
+		// n.value = v
 	}
 	fmt.Println()
+	size++
 }
 
 // AddBackword ...
@@ -99,7 +108,6 @@ func DisplayList(n *Node) ([]int, error) {
 		var s []int
 		for n != nil {
 			s = append(s, n.value)
-			fmt.Println("idx", n.idx)
 			n = n.next
 		}
 		return s, nil

@@ -88,3 +88,14 @@ func TestTestDisplayListInvalid(t *testing.T) {
 	_, err := DisplayList(testList)
 	require.Error(t, err)
 }
+
+func TestAddForward(t *testing.T) {
+	expected := []int{4, 1, 2, 3}
+	testList := &Node{}
+	for _, i := range []int{1, 2, 3} {
+		testList.AddBackword(i)
+	}
+	testList.AddForward(4)
+	actual, _ := DisplayList(testList)
+	assert.Equal(t, expected, actual)
+}
