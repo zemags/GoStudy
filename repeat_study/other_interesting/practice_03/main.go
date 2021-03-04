@@ -1,5 +1,5 @@
 // Single linked list
-// [a|*]->[b|*]->[x]
+// [a|*]->[b|*]->[x|nil]
 package main
 
 import (
@@ -13,7 +13,6 @@ var size int
 
 // Node ...
 type Node struct {
-	idx   int
 	value int
 	next  *Node
 }
@@ -40,35 +39,26 @@ func (n *Node) IsEmpty() bool {
 // AddForward ...
 func (n *Node) AddForward(v int) {
 	if n.IsEmpty() {
-		*n = Node{value: v, idx: size}
+		*n = Node{value: v}
 	} else {
-		for i := 0; i < size; i++ {
-			if n.next != nil {
-				currentValue := n.value
-				nextNodes := n.next
-				fmt.Println(">", n.value, currentValue, nextNodes.value)
-			}
-
-			n = n.next
-		}
-		// fmt.Println(*n)
-		// n.value = v
+		nextNodes := *n
+		n.value = v
+		n.next = &nextNodes
 	}
-	fmt.Println()
 	size++
 }
 
 // AddBackword ...
 func (n *Node) AddBackword(v int) {
-	nextNode := Node{value: v, idx: size}
+	nextNode := Node{value: v}
 	if n.IsEmpty() {
 		*n = nextNode
 	} else {
-		oldNode := n
-		for oldNode.next != nil {
-			oldNode = oldNode.next
+		currentNode := n
+		for currentNode.next != nil {
+			currentNode = currentNode.next
 		}
-		oldNode.next = &nextNode
+		currentNode.next = &nextNode
 	}
 	size++
 }
