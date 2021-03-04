@@ -99,3 +99,28 @@ func TestAddForward(t *testing.T) {
 	actual, _ := DisplayList(testList)
 	assert.Equal(t, expected, actual)
 }
+
+func TestAddInto(t *testing.T) {
+	expected := []int{1, 2, 5, 3, 4}
+	testList := &Node{}
+	for _, i := range []int{1, 2, 3, 4} {
+		testList.AddBackword(i)
+	}
+	err := testList.AddInto(5, 2)
+	require.NoError(t, err)
+	actual, _ := DisplayList(testList)
+	assert.Equal(t, expected, actual)
+}
+
+func TestAddIntoInvalidIdx(t *testing.T) {
+	testList := &Node{}
+	err := testList.AddInto(1, 1)
+	require.Error(t, err)
+}
+
+func TestAddIntoIdxOutOfRange(t *testing.T) {
+	testList := &Node{}
+	testList.AddBackword(1)
+	err := testList.AddInto(2, 3)
+	require.Error(t, err)
+}
