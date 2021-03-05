@@ -5,7 +5,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"log"
 	"reflect"
 )
 
@@ -85,25 +84,27 @@ func (n *Node) AddInto(v, idx int) error {
 
 // Remove item by given index, or error if index doesn't exists
 func (n *Node) Remove(idx int) error {
-	if idx > size-1 || n.IsEmpty() {
-		return errors.New("index out of range")
-	} else if idx == 0 && !n.IsEmpty() {
-		*n = *n.next
+
+	if n.IsEmpty() || idx > size || idx < 0 {
+		return errors.New("index ouf of range")
+	}
+
+	if idx < 1 {
+		nextNodes := *n.next
+		*n = nextNodes
 	} else {
-		for i := 0; i < size; i++ {
+		for i := 0; i < idx; i++ {
 			if i == idx-1 {
 				if n.next.next != nil {
 					nextNodes := *n.next.next
-					n.next = &nextNodes
-				} else if n.next != nil {
-					n.next = nil
+					*n.next = nextNodes
+				} else if n.next.next == nil {
+					*n.next = Node{}
 				}
-			} else {
-				n = n.next
 			}
-			n = n.next
 		}
 	}
+
 	size--
 	return nil
 }
@@ -153,10 +154,7 @@ func main() {
 	singleLL.AddBackword(77)
 	singleLL.AddBackword(88)
 
-	err := singleLL.Remove(3)
-	if err != nil {
-		log.Fatal(err)
-	}
+	singleLL.Remove(1)
 	l, _ := DisplayList(singleLL)
 	fmt.Println(l)
 }
