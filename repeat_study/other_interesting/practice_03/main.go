@@ -72,21 +72,39 @@ func (n *Node) AddInto(v, idx int) error {
 	} else {
 		for i := 0; i < size; i++ {
 			if i == idx {
-				if n.next == nil {
-					nextNodes := *n
-					n.next = &nextNodes
-				} else {
-					// TODO: refactor cause TestAddInto
-					nextNodes := *n
-					n.next = &nextNodes
-				}
+				nextNodes := *n
+				n.next = &nextNodes
 				n.value = v
 			}
 			n = n.next
 		}
 	}
-
 	size++
+	return nil
+}
+
+// Remove item by given index, or error if index doesn't exists
+func (n *Node) Remove(idx int) error {
+	if idx > size-1 || n.IsEmpty() {
+		return errors.New("index out of range")
+	} else if idx == 0 && !n.IsEmpty() {
+		*n = *n.next
+	} else {
+		for i := 0; i < size; i++ {
+			if i == idx-1 {
+				if n.next.next != nil {
+					nextNodes := *n.next.next
+					n.next = &nextNodes
+				} else if n.next != nil {
+					n.next = nil
+				}
+			} else {
+				n = n.next
+			}
+			n = n.next
+		}
+	}
+	size--
 	return nil
 }
 
@@ -134,11 +152,11 @@ func main() {
 	singleLL.AddBackword(66)
 	singleLL.AddBackword(77)
 	singleLL.AddBackword(88)
-	_, err := singleLL.GetAFirst()
+
+	err := singleLL.Remove(3)
 	if err != nil {
 		log.Fatal(err)
 	}
-	singleLL.AddInto(44, 3)
 	l, _ := DisplayList(singleLL)
 	fmt.Println(l)
 }

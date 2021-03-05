@@ -124,3 +124,28 @@ func TestAddIntoIdxOutOfRange(t *testing.T) {
 	err := testList.AddInto(2, 3)
 	require.Error(t, err)
 }
+
+func TestRemove(t *testing.T) {
+	expected := []int{1, 2, 3}
+	testList := &Node{}
+	for _, i := range []int{1, 2, 3, 4} {
+		testList.AddBackword(i)
+	}
+	err := testList.Remove(3)
+	require.NoError(t, err)
+	actual, _ := DisplayList(testList)
+	assert.Equal(t, expected, actual)
+}
+
+func TestRemoveEmpty(t *testing.T) {
+	testList := &Node{}
+	err := testList.Remove(1)
+	require.Error(t, err)
+}
+
+func TestRemoveIndexOutOfRange(t *testing.T) {
+	testList := &Node{}
+	testList.AddBackword(1)
+	err := testList.Remove(2)
+	require.Error(t, err)
+}
