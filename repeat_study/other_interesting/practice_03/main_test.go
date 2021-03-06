@@ -157,3 +157,24 @@ func TestRemoveIndexOutOfRange(t *testing.T) {
 	err = testList.Remove(-1)
 	require.Error(t, err)
 }
+
+func TestMove(t *testing.T) {
+	expected := []int{3, 1, 2}
+	testList := &Node{}
+	for _, i := range []int{1, 2, 3} {
+		testList.AddBackword(i)
+	}
+	err := testList.Move(2)
+	require.NoError(t, err)
+	actual, _ := DisplayList(testList)
+	assert.Equal(t, expected, actual)
+}
+
+func TestMoveInvalid(t *testing.T) {
+	testList := &Node{}
+	testList.AddBackword(1)
+	err := testList.Move(2)
+	require.Error(t, err)
+	err = testList.Move(-1)
+	require.Error(t, err)
+}

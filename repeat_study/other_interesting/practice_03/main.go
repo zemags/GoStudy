@@ -25,6 +25,7 @@ type SingleLinkedList interface {
 	GetFirst() (int, error)
 	GetAFirst() (*Node, error) // get all items except first
 	GetLen() (int, error)
+	Move(int) error
 }
 
 // IsEmpty check if list is empty
@@ -106,6 +107,14 @@ func (n *Node) Remove(idx int) error {
 	}
 
 	size--
+	return nil
+}
+
+// Move item by index to the begin of list
+func (n *Node) Move(idx int) error {
+	if n.IsEmpty() || idx > size || idx < 0 {
+		return errors.New("index ouf of range")
+	}
 	return nil
 }
 
