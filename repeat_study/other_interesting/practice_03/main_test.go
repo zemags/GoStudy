@@ -126,8 +126,8 @@ func TestAddIntoIdxOutOfRange(t *testing.T) {
 }
 
 func TestRemove(t *testing.T) {
-	expected := []int{2, 3, 4}
 	testList := &Node{}
+	expected := []int{2, 3, 4}
 	for _, i := range []int{1, 2, 3, 4} {
 		testList.AddBackword(i)
 	}
@@ -138,6 +138,15 @@ func TestRemove(t *testing.T) {
 
 	expected = []int{2, 4}
 	err = testList.Remove(1)
+	require.NoError(t, err)
+	actual, _ = DisplayList(testList)
+	assert.Equal(t, expected, actual)
+
+	expected = []int{2, 3, 5}
+	for _, i := range []int{3, 4, 5} {
+		testList.AddBackword(i)
+	}
+	err = testList.Remove(2)
 	require.NoError(t, err)
 	actual, _ = DisplayList(testList)
 	assert.Equal(t, expected, actual)

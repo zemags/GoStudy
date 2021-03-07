@@ -23,7 +23,7 @@ type SingleLinkedList interface {
 	AddBackword(int)
 	AddInto(int, int)
 	GetFirst() (int, error)
-	GetAFirst() (*Node, error) // get all items except first
+	GetAFirst() (*Node, error)
 	GetLen() (int, error)
 	Move(int) error
 }
@@ -38,6 +38,7 @@ func (n *Node) IsEmpty() bool {
 
 // AddForward add item to the first place and shift other right
 func (n *Node) AddForward(v int) {
+	fmt.Println(n)
 	if n.IsEmpty() {
 		*n = Node{value: v}
 	} else {
@@ -45,6 +46,7 @@ func (n *Node) AddForward(v int) {
 		n.value = v
 		n.next = &nextNodes
 	}
+	fmt.Println(n)
 	size++
 }
 
@@ -70,7 +72,7 @@ func (n *Node) AddInto(v, idx int) error {
 	} else if idx != 0 && n.IsEmpty() || idx > size {
 		return errors.New("index out or range")
 	} else {
-		for i := 0; i < size; i++ {
+		for i := 0; i != idx+1; i++ {
 			if i == idx {
 				nextNodes := *n
 				n.next = &nextNodes
@@ -85,7 +87,6 @@ func (n *Node) AddInto(v, idx int) error {
 
 // Remove item by given index, or error if index doesn't exists
 func (n *Node) Remove(idx int) error {
-
 	if n.IsEmpty() || idx > size || idx < 0 {
 		return errors.New("index ouf of range")
 	}
@@ -94,7 +95,7 @@ func (n *Node) Remove(idx int) error {
 		nextNodes := *n.next
 		*n = nextNodes
 	} else {
-		for i := 0; i < idx; i++ {
+		for i := 0; i != idx; i++ {
 			if i == idx-1 {
 				if n.next.next != nil {
 					nextNodes := *n.next.next
@@ -105,16 +106,26 @@ func (n *Node) Remove(idx int) error {
 			}
 		}
 	}
-
 	size--
 	return nil
 }
 
 // Move item by index to the begin of list
 func (n *Node) Move(idx int) error {
-	if n.IsEmpty() || idx > size || idx < 0 {
-		return errors.New("index ouf of range")
+	if idx == 0 {
+		return nil
 	}
+	temp := n
+	var saveValue int
+	for i := 0; i != idx+1; i++ {
+		if i == idx {
+			saveValue = temp.value
+			break
+		}
+		temp = temp.next
+	}
+	n.Remove(idx)
+	n.AddForward(saveValue)
 	return nil
 }
 
@@ -157,13 +168,12 @@ func DisplayList(n *Node) ([]int, error) {
 
 func main() {
 	singleLL := &Node{}
-	singleLL.IsEmpty()
 	singleLL.AddBackword(55)
 	singleLL.AddBackword(66)
 	singleLL.AddBackword(77)
 	singleLL.AddBackword(88)
 
-	singleLL.Remove(1)
+	singleLL.Move(2)
 	l, _ := DisplayList(singleLL)
 	fmt.Println(l)
 }
