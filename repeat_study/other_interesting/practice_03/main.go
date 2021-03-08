@@ -38,7 +38,6 @@ func (n *Node) IsEmpty() bool {
 
 // AddForward add item to the first place and shift other right
 func (n *Node) AddForward(v int) {
-	fmt.Println(n)
 	if n.IsEmpty() {
 		*n = Node{value: v}
 	} else {
@@ -46,7 +45,6 @@ func (n *Node) AddForward(v int) {
 		n.value = v
 		n.next = &nextNodes
 	}
-	fmt.Println(n)
 	size++
 }
 
@@ -97,13 +95,14 @@ func (n *Node) Remove(idx int) error {
 	} else {
 		for i := 0; i != idx; i++ {
 			if i == idx-1 {
-				if n.next.next != nil {
-					nextNodes := *n.next.next
-					*n.next = nextNodes
-				} else if n.next.next == nil {
-					*n.next = Node{}
+				if n.next.next == nil {
+					n.next = nil
+				} else {
+					n.next = n.next.next
 				}
+				break
 			}
+			n = n.next
 		}
 	}
 	size--
@@ -112,8 +111,8 @@ func (n *Node) Remove(idx int) error {
 
 // Move item by index to the begin of list
 func (n *Node) Move(idx int) error {
-	if idx == 0 {
-		return nil
+	if n.IsEmpty() || idx > size || idx <= 0 {
+		return errors.New("index ouf of range")
 	}
 	temp := n
 	var saveValue int
@@ -172,8 +171,9 @@ func main() {
 	singleLL.AddBackword(66)
 	singleLL.AddBackword(77)
 	singleLL.AddBackword(88)
+	singleLL.AddBackword(99)
 
-	singleLL.Move(2)
+	singleLL.Remove(4)
 	l, _ := DisplayList(singleLL)
 	fmt.Println(l)
 }

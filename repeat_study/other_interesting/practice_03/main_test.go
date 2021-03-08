@@ -142,14 +142,15 @@ func TestRemove(t *testing.T) {
 	actual, _ = DisplayList(testList)
 	assert.Equal(t, expected, actual)
 
-	expected = []int{2, 3, 5}
-	for _, i := range []int{3, 4, 5} {
-		testList.AddBackword(i)
+	testList1 := &Node{}
+	expected1 := []int{33, 44, 66, 77}
+	for _, i := range []int{33, 44, 55, 66, 77} {
+		testList1.AddBackword(i)
 	}
-	err = testList.Remove(2)
-	require.NoError(t, err)
-	actual, _ = DisplayList(testList)
-	assert.Equal(t, expected, actual)
+	err1 := testList1.Remove(2)
+	require.NoError(t, err1)
+	actual1, _ := DisplayList(testList1)
+	assert.Equal(t, expected1, actual1)
 }
 
 func TestRemoveEmpty(t *testing.T) {
