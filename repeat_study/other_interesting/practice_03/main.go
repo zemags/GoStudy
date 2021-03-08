@@ -4,7 +4,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 )
 
@@ -166,14 +165,5 @@ func DisplayList(n *Node) ([]int, error) {
 }
 
 func main() {
-	singleLL := &Node{}
-	singleLL.AddBackword(55)
-	singleLL.AddBackword(66)
-	singleLL.AddBackword(77)
-	singleLL.AddBackword(88)
-	singleLL.AddBackword(99)
 
-	singleLL.Remove(4)
-	l, _ := DisplayList(singleLL)
-	fmt.Println(l)
 }
