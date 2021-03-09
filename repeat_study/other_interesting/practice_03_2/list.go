@@ -38,12 +38,12 @@ func (l *LinkedList) Len() int {
 }
 
 // First return first item
-func (l *LinkedList) First() interface{} {
+func (l *LinkedList) First() *Node {
 	return l.head
 }
 
 // Last return last item
-func (l *LinkedList) Last() interface{} {
+func (l *LinkedList) Last() *Node {
 	return l.tail
 }
 

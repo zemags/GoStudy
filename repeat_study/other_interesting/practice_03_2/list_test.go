@@ -29,3 +29,23 @@ func TestDisplayListValid(t *testing.T) {
 	actual := DisplayList(l)
 	assert.Equal(t, expected, actual)
 }
+
+func TestFirst(t *testing.T) {
+	l := NewList()
+	l.AddForward(1)
+	l.AddForward(2)
+	l.AddForward(3)
+	node := l.First()
+	actual := node.Value.(int)
+	assert.Equal(t, 3, actual)
+}
+
+func TestLast(t *testing.T) {
+	l := NewList()
+	l.AddForward(1)
+	l.AddForward(2)
+	l.AddForward(3)
+	node := l.Last()
+	actual := node.Value.(int)
+	assert.Equal(t, 1, actual)
+}
