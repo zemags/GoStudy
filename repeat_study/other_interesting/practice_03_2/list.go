@@ -1,5 +1,9 @@
 package practice032
 
+import (
+	"errors"
+)
+
 // TwoLinkedList ...
 type TwoLinkedList interface {
 	Len() int
@@ -7,8 +11,8 @@ type TwoLinkedList interface {
 	Last() *Node
 	AddForward(v interface{}) *Node
 	AddBackword(v interface{}) *Node
-	Remove(i *Node)
-	MoveToFisrt(i *Node) // move item to the first index
+	Remove(n *Node)
+	MoveToFirst(n *Node) // move item to the first index
 }
 
 // Node ...
@@ -70,7 +74,7 @@ func (l *LinkedList) AddBackword(v int) {
 	node.Prev = l.tail
 
 	if l.tail != nil {
-		// if item was in list tail
+		// if tail element exist in list
 		l.tail.Next = node
 	}
 
@@ -80,6 +84,47 @@ func (l *LinkedList) AddBackword(v int) {
 	}
 
 	l.length++
+}
+
+// Remove passed value from list
+func (l *LinkedList) Remove(n *Node, removeAll bool) error {
+	if l.length == 0 {
+		return errors.New("empty list provided")
+	}
+	tmp := l.head
+	for tmp != nil {
+		if tmp.Value == n.Value {
+			break
+		}
+		tmp = tmp.Next
+	}
+
+	if tmp.Next != nil {
+		tmp.Prev.Next = tmp.Next
+	}
+
+	if tmp.Prev != nil {
+		tmp.Next.Prev = tmp.Prev
+	}
+
+	if tmp.Prev == nil {
+		l.head = tmp.Next
+	}
+	if tmp.Next == nil {
+		l.tail = tmp.Prev
+	}
+
+	l.length--
+	return nil
+}
+
+// MoveToFirst move item to the list begin
+func (l *LinkedList) MoveToFirst(n *Node) error {
+	if l.length == 0 {
+		return errors.New("empty list provided")
+	}
+
+	return nil
 }
 
 // DisplayList write items from Node to list
