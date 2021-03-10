@@ -1,7 +1,5 @@
 package practice032
 
-import "fmt"
-
 // TwoLinkedList ...
 type TwoLinkedList interface {
 	Len() int
@@ -49,17 +47,46 @@ func (l *LinkedList) Last() *Node {
 
 // AddForward add value at the begin of list
 func (l *LinkedList) AddForward(v int) {
-	l.tail = l.head.Next
-	l.head.Value = v
+	node := &Node{}
+	node.Value = v
+	node.Next = l.head
+	node.Prev = nil
+
+	if l.head != nil {
+		l.head.Prev = node
+	}
+	if l.tail == nil {
+		l.tail = node
+	}
+	l.head = node
 	l.length++
-	fmt.Println(l.head, l.tail)
+}
+
+// AddBackword add value at the begin of list
+func (l *LinkedList) AddBackword(v int) {
+	node := &Node{}
+	node.Value = v
+	node.Next = nil
+	node.Prev = l.tail
+
+	if l.tail != nil {
+		// if item was in list tail
+		l.tail.Next = node
+	}
+
+	l.tail = node
+	if l.head == nil {
+		l.head = node
+	}
+
+	l.length++
 }
 
 // DisplayList write items from Node to list
 func DisplayList(l *LinkedList) (s []interface{}) {
-
-	// fmt.Println(l)
-	// fmt.Println(l.head.Next)
-
+	for i := 0; i < l.length; i++ {
+		s = append(s, l.head.Value)
+		l.head = l.head.Next
+	}
 	return s
 }

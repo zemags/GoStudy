@@ -14,18 +14,42 @@ func TestLen(t *testing.T) {
 }
 
 func TestAddForward(t *testing.T) {
+	expected := []interface{}([]interface{}{4, 3, 2, 1})
 	l := NewList()
-	l.AddForward(1)
-	l.AddForward(2)
-	l.AddForward(3)
-}
-
-func TestDisplayListValid(t *testing.T) {
-	expected := []int{1, 2, 3}
-	l := NewList()
-	for _, i := range []int{1, 2, 3} {
+	for _, i := range []int{1, 2, 3, 4} {
 		l.AddForward(i)
 	}
+	actual := DisplayList(l)
+	assert.Equal(t, expected, actual)
+}
+
+func TestAddBackword(t *testing.T) {
+	expected := []interface{}([]interface{}{1, 2, 3, 4})
+	l := NewList()
+	for _, i := range []int{1, 2, 3, 4} {
+		l.AddBackword(i)
+	}
+	actual := DisplayList(l)
+	assert.Equal(t, expected, actual)
+}
+
+func TestDisplayList(t *testing.T) {
+	expected := []interface{}([]interface{}{1, 2, 3})
+	l := NewList()
+
+	l.length = 3
+	l.head = &Node{
+		Value: 1,
+		Prev:  nil,
+		Next: &Node{
+			Value: 2,
+			Next: &Node{
+				Value: 3,
+				Next:  nil,
+			},
+		},
+	}
+
 	actual := DisplayList(l)
 	assert.Equal(t, expected, actual)
 }
