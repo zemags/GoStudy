@@ -25,6 +25,16 @@ func countingSort(a []int) []int {
 	return a
 }
 
+func selectionSort(a []int) []int {
+	min := 0
+	for _, v := range a {
+		if v < min {
+			min = v
+		}
+	}
+	return []int{}
+}
+
 func main() {
 
 }
