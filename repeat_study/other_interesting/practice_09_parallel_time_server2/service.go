@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func server() {
+func main() {
 	port := os.Args[1]
 
 	lsn, err := net.Listen("tcp", fmt.Sprintf("localhost:%v", port))
