@@ -2,9 +2,14 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
+	"os"
+	"path/filepath"
 )
+
+const BASEDIR = "./"
 
 type Cmd struct {
 	command string
@@ -26,14 +31,42 @@ func (c Cmd) Recevier(conn net.Conn) string {
 	}
 }
 
-// ls return conent of current folder
-func (c Cmd) ls() string {
-	return ""
+// pwd return current path
+func (c Cmd) pwd() string {
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+	}
+	return dir
 }
 
-// get
-func (c Cmd) get() string {
-	return ""
+// ls return content of current folder
+func (c Cmd) ls() (res string) {
+	files, err := ioutil.ReadDir(BASEDIR)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, f := range files {
+		res += fmt.Sprintf("%v\n", f.Name())
+	}
+	return res
+}
+
+// get file content
+func (c Cmd) get(filename string) string {
+	file, err := os.Open(fmt.Sprintf("%v/%v", c.pwd(), filename))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer func() {
+		if err = file.Close(); err != nil {
+			log.Fatal(err)
+		}
+	}()
+	content, err := ioutil.ReadAll(file)
+
+	return string(content)
 }
 
 // close
@@ -47,5 +80,7 @@ func (c Cmd) close(conn net.Conn) string {
 
 // cd
 func (c Cmd) cd() string {
+	// ..
+	// if string
 	return ""
 }
