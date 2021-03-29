@@ -11,9 +11,7 @@ import (
 	"strings"
 )
 
-const BASEDIR = "./"
-
-// var ErrInvalidCommand = fmt.Errorf("command not found")
+// basedir := os.Getenv("BASEDIR")
 
 type Cmd struct {
 	command string
@@ -23,7 +21,9 @@ type Cmd struct {
 func (c Cmd) Recevier(conn net.Conn) string {
 	commandSlice := strings.Split(c.command, " ")
 	if len(commandSlice) == 0 {
-		return fmt.Sprintf("command %s not found", c.command)
+		report := fmt.Sprintf("command %s not found", c.command)
+		log.Print(report)
+		return report
 	}
 	command := commandSlice[1]
 	switch {
@@ -33,6 +33,8 @@ func (c Cmd) Recevier(conn net.Conn) string {
 		return c.ls()
 	case command == "get":
 		return c.get()
+	case command == "pwd":
+		return c.pwd()
 	case command == "close":
 		return c.close(conn)
 	default:
@@ -42,10 +44,7 @@ func (c Cmd) Recevier(conn net.Conn) string {
 
 // pwd return current path
 func (c Cmd) pwd() string {
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	if err != nil {
-		log.Fatal(err)
-	}
+	dir := filepath.Dir(BASEDIR)
 	return dir
 }
 
@@ -105,10 +104,13 @@ func (c Cmd) close(conn net.Conn) string {
 func (c Cmd) cd() string {
 	commands, err := parse(c.command)
 	if err != nil {
-		// print err
+		log.Print(err)
+		// return ""
 	}
 	path := commands[1]
 	if path == ".." {
+		currentPath := c.pwd()
+		fmt.Println(currentPath)
 
 	}
 	// validate path check with BASEDIR

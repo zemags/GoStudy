@@ -21,6 +21,7 @@ func main() {
 			log.Print(err)
 			continue
 		}
+
 		c := Cmd{
 			command: cmd,
 		}
