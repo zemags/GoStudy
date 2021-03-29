@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -11,6 +12,8 @@ import (
 )
 
 const BASEDIR = "./"
+
+// var ErrInvalidCommand = fmt.Errorf("command not found")
 
 type Cmd struct {
 	command string
@@ -55,17 +58,22 @@ func (c Cmd) ls() (res string) {
 
 	for _, f := range files {
 		fi, err := os.Stat(fmt.Sprintf("%v/%v", c.pwd(), f))
-		res += fmt.Sprintf("%v%v\n", f.Name())
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+		res += fmt.Sprintf("%v..\t%v\t%v\n", fi.Name()[:10], fi.Size(), fi.ModTime())
 	}
 	return res
 }
 
 // get file content
 func (c Cmd) get() string {
-	if len(c.command) != 2 {
-		return ""
+	commands, err := parse(c.command)
+	if err != nil {
+		// print error
 	}
-	filename := strings.Split(c.command, " ")[1]
+	filename := commands[1]
 
 	file, err := os.Open(fmt.Sprintf("%v/%v", c.pwd(), filename))
 	if err != nil {
@@ -77,6 +85,9 @@ func (c Cmd) get() string {
 		}
 	}()
 	content, err := ioutil.ReadAll(file)
+	if err != nil {
+		log.Print(err)
+	}
 
 	return string(content)
 }
@@ -92,7 +103,23 @@ func (c Cmd) close(conn net.Conn) string {
 
 // cd
 func (c Cmd) cd() string {
+	commands, err := parse(c.command)
+	if err != nil {
+		// print err
+	}
+	path := commands[1]
+	if path == ".." {
+
+	}
+	// validate path check with BASEDIR
 	// ..
 	// if string
 	return ""
+}
+
+func parse(s string) ([]string, error) {
+	if len(s) != 2 {
+		return []string{}, errors.New("command not found")
+	}
+	return strings.Split(s, " "), nil
 }
