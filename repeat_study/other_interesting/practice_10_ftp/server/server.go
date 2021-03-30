@@ -1,30 +1,25 @@
 package main
 
 import (
-	"bufio"
 	"log"
 	"net"
+	"os"
 )
 
 func main() {
 	lsn, err := net.Listen("tcp", "localhost:8000")
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
+		os.Exit(1)
 	}
 
-	// listen port
-	conn, err := lsn.Accept()
-
 	for {
-		cmd, err := bufio.NewReader(conn).ReadString('\n')
+		// listen port
+		conn, err := lsn.Accept()
 		if err != nil {
 			log.Print(err)
 			continue
 		}
-
-		c := Cmd{
-			command: cmd,
-		}
-		c.Recevier(conn)
+		go Receiver(conn)
 	}
 }

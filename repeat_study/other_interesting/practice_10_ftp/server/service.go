@@ -1,56 +1,77 @@
 package main
 
 import (
-	"errors"
+	"bufio"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net"
 	"os"
-	"path/filepath"
 	"strings"
 )
 
-// basedir := os.Getenv("BASEDIR")
+var BASEDIR = os.Getenv("BASEDIR")
 
 type Cmd struct {
 	command string
+	arg     string
 }
 
-// Recevier
-func (c Cmd) Recevier(conn net.Conn) string {
-	commandSlice := strings.Split(c.command, " ")
-	if len(commandSlice) == 0 {
-		report := fmt.Sprintf("command %s not found", c.command)
-		log.Print(report)
-		return report
+// Receiver
+func Receiver(conn net.Conn) {
+	defer conn.Close()
+
+	result := "command not found"
+
+	c := cmd(conn)
+	if c.command == "cd" {
+		result = c.cd()
+	} else if c.command == "ls" {
+		result = c.ls()
+	} else if c.command == "get" {
+		result = c.get()
+	} else if c.command == "pwd" {
+		result = c.pwd()
+	} else if c.command == "close" {
+		conn.Close()
 	}
-	command := commandSlice[1]
-	switch {
-	case command == "cd":
-		return c.cd()
-	case command == "ls":
-		return c.ls()
-	case command == "get":
-		return c.get()
-	case command == "pwd":
-		return c.pwd()
-	case command == "close":
-		return c.close(conn)
-	default:
-		return fmt.Sprintf("command %s not found", command)
+	conn.Write([]byte("hello " + result))
+}
+
+func cmd(conn net.Conn) *Cmd {
+	c := &Cmd{}
+
+	reader, err := bufio.NewReader(conn).ReadString('\n')
+	if err != nil {
+		conn.Close()
+		return c
 	}
+	readerSlice := strings.Split(string(reader), " ")
+	if len(readerSlice) == 0 {
+		// empty command recevied
+		conn.Close()
+		return c
+	}
+
+	c.command = strings.TrimSuffix(readerSlice[0], "\n")
+	if len(readerSlice) > 1 {
+		c.arg = strings.TrimSuffix(readerSlice[1], "\n")
+	}
+	return c
 }
 
 // pwd return current path
-func (c Cmd) pwd() string {
-	dir := filepath.Dir(BASEDIR)
-	return dir
+func (c *Cmd) pwd() string {
+	currentFolder, err := os.Getwd()
+	if err != nil {
+		return ""
+	}
+	return currentFolder
 }
 
 // ls return content of current folder
-func (c Cmd) ls() (res string) {
-	files, err := ioutil.ReadDir(BASEDIR)
+func (c *Cmd) ls() (res string) {
+	files, err := ioutil.ReadDir(c.pwd())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -67,14 +88,8 @@ func (c Cmd) ls() (res string) {
 }
 
 // get file content
-func (c Cmd) get() string {
-	commands, err := parse(c.command)
-	if err != nil {
-		// print error
-	}
-	filename := commands[1]
-
-	file, err := os.Open(fmt.Sprintf("%v/%v", c.pwd(), filename))
+func (c *Cmd) get() string {
+	file, err := os.Open(fmt.Sprintf("%v/%v", c.pwd(), c.arg))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,37 +106,10 @@ func (c Cmd) get() string {
 	return string(content)
 }
 
-// close
-func (c Cmd) close(conn net.Conn) string {
-	err := conn.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return "Close connection"
-}
-
 // cd
-func (c Cmd) cd() string {
-	commands, err := parse(c.command)
-	if err != nil {
-		log.Print(err)
-		// return ""
+func (c *Cmd) cd() string {
+	if os.Chdir(c.arg) != nil {
+		return "folder not found"
 	}
-	path := commands[1]
-	if path == ".." {
-		currentPath := c.pwd()
-		fmt.Println(currentPath)
-
-	}
-	// validate path check with BASEDIR
-	// ..
-	// if string
-	return ""
-}
-
-func parse(s string) ([]string, error) {
-	if len(s) != 2 {
-		return []string{}, errors.New("command not found")
-	}
-	return strings.Split(s, " "), nil
+	return "ok"
 }
