@@ -23,6 +23,10 @@ message Container {
 message Response {
     bool created = 1;
     Consignment consignment = 2;
+    repeated Consignment consignments = 3;
+}
+
+message GetRequest {
 }
 
 // service is handled by a gRPC protobuf plugin
@@ -30,5 +34,8 @@ service ShippingService {
     // define service, this should contain the methods
     // that we wish to expose to other services.
     rpc CreateConsignment(Consignment) returns (Response) {
+    }
+
+    rpc GetConsignments(GetRequest) returns (Response) {
     }
 }
