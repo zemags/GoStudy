@@ -6,7 +6,8 @@ import (
 	"net"
 	"sync"
 
-	"github.com/zemags/GoStudy/repeat_study/managment_platform/pb"
+	"github.com/zemags/GoStudy/repeat_study/managment_platform/service_consignment/pb"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
