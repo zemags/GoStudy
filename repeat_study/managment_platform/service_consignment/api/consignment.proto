@@ -4,7 +4,7 @@ package consignment;
 
 option go_package = ".;pb";
 
-// messages are handled by protobu
+// messages are handled by protobuf
 message Consignment {
     string id = 1;
     string description = 2;

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -50,4 +51,11 @@ func main() {
 	}
 	log.Printf("Created: %t", r.Created)
 
+	getAll, err := client.GetConsignments(context.Background(), &pb.GetRequest{})
+	if err != nil {
+		log.Fatalf("cannot get consignments list: %v", err)
+	}
+	for _, v := range getAll.Consignments {
+		fmt.Println(v)
+	}
 }
