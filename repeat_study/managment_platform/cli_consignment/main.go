@@ -9,7 +9,8 @@ import (
 	"os"
 
 	"github.com/zemags/GoStudy/repeat_study/managment_platform/service_consignment/pb"
-	"google.golang.org/grpc"
+
+	micro "github.com/micro/go-micro/v2"
 )
 
 const (
@@ -28,12 +29,9 @@ func parseFile(file string) (*pb.Consignment, error) {
 }
 
 func main() {
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf("Cant connect: %v", err)
-	}
-	defer conn.Close()
-	client := pb.NewShippingServiceClient(conn)
+	service := micro.NewService(micro.Name("consignments.cli"))
+	service.Init()
+	client := pb.NewShippingService("consignment.service", service.Client())
 
 	file := defaultFilename
 	if len(os.Args) > 1 {
