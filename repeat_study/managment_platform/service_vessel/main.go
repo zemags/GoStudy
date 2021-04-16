@@ -1,8 +1,12 @@
 package main
 
 import (
+	"context"
 	"errors"
+	"log"
 
+	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/v2"
 	"github.com/zemags/GoStudy/repeat_study/managment_platform/service_vessel/pb"
 )
 
@@ -15,7 +19,7 @@ type VesselRepository struct {
 }
 
 // grpc service handler
-type vesselService strcut {
+type vesselService struct {
 	repo Repository
 }
 
@@ -29,6 +33,35 @@ func (repo *VesselRepository) FindAvailable(spec *pb.Specification) (*pb.Vessel,
 	return nil, errors.New("Cant find vessel for specification")
 }
 
-func main() {
+func (s *vesselService) FindAvailable(ctx context.Context, req *pb.Specification, res *pb.Response) error {
+	// find next availabel vessel
+	vessel, err := s.repo.FindAvailable(req)
+	if err != nil {
+		return err
+	}
+	res.Vessel = vessel
+	return nil
+}
 
+func main() {
+	vessels := []*pb.Vessel{
+		&pb.Vessel{
+			Id:        "vessel001",
+			Name:      "Boat",
+			MaxWeight: 200999,
+			Capacity:  500,
+		},
+	}
+	repo := &VesselRepository{vessels}
+
+	service := micro.NewService(micro.Name("service.vessel"))
+
+	service.Init()
+
+	if err := pb.RegisterShippingServiceHandler(service.Server(), &vesselService{repo}); err != nil {
+		log.Panic(err)
+	}
+	if err != service.Run(); err != nil {
+		log.Panic(err)
+	}
 }
