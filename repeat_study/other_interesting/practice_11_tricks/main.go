@@ -1,7 +1,11 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io"
+	"log"
 	"os"
 	"os/exec"
 	"sync"
@@ -83,4 +87,38 @@ func methodExpression() {
 
 	f2 := (People).HelloValue
 	f2(p, "Spam")
+}
+
+type Customer struct {
+	Name string
+	Age  int
+}
+
+func (c *Customer) WriteJSON(w io.Writer) error {
+	js, err := json.Marshal(c)
+	if err != nil {
+		return err
+	}
+	_, err = w.Write(js)
+	return err
+}
+
+func savePerson() {
+	c := &Customer{Name: "Bob", Age: 22}
+
+	var buf *bytes.Buffer
+	if err := c.WriteJSON(buf); err != nil {
+		log.Fatal(err)
+	}
+
+	f, err := os.Create("/tmp/customer")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	err = c.WriteJSON(f)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
