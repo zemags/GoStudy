@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+defaults:
+  run:
+    working-directory: ./workshop_1
+
 jobs:
   lint:
     name: Run linter
@@ -12,5 +16,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run golangci-lint
-        working-directory: ./workshop_1
         uses: golangci/golangci-lint-action@v2.5.2
